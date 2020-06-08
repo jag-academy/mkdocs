@@ -1,0 +1,32 @@
+# ~\~ language=YAML filename=mkdocs.yml
+# ~\~ begin <<docs/index.md|mkdocs.yml>>[0]
+site_name: Entangled and MkDocs
+nav:
+        - Home: "index.md"
+        - About: "about.md"
+theme:
+        name: "material"
+        highlightjs: true
+        palette:
+                scheme: "slate"
+markdown_extensions:
+        - pymdownx.superfences:
+            custom_fences:
+               - name: "*"
+                 class: "codehilite"
+                 format: !!python/name:entangled.pymd.format
+                 validator: !!python/name:entangled.pymd.validator
+        - pymdownx.arithmatex
+        - admonition
+        - toc:
+            permalink: true
+
+extra_css:
+        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-dark.min.css"
+
+extra_javascript:
+        - "https://polyfill.io/v3/polyfill.min.js?features=es6"
+        - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"
+        - js/init.js
+# ~\~ end
