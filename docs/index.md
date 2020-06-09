@@ -9,8 +9,8 @@ This is a setup of Entangled with MkDocs, using:
 
 ## Prep
 
-- Install `entangled` following the instructions at [entangled.github.io](https://entangled.github.io/#section-entangled).
-- Install the `entangled` Python module by running `pip install entangled-filters`
+- Install `entangled` (&ge; 1.2) following the instructions at [entangled.github.io](https://entangled.github.io/#section-entangled).
+- Install the `entangled-filters` Python module (&ge; 0.7) by running `pip install entangled-filters`
 - Install `mkdocs` by running `pip install mkdocs`
 - Install material theme `pip install mkdocs-material`
 
@@ -49,14 +49,24 @@ let syntax : entangled.Syntax =
     }
 ```
 
-To initiate a MkDocs project, you need a `mkdocs.yml` file. We need to convince MkDocs to accept the code blocks. The `entangled` Python module has functions to aid in this. 
+To initiate a MkDocs project, you need a `mkdocs.yml` file. This contains the meta-data of the site,
 
 ```yaml file="mkdocs.yml"
 site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
+site_url: https://entangled.github.io/mkdocs
+repo_url: https://github.com/entangled/mkdocs
+site_description: >
+        Setup an MkDocs project that works with Entangled for Literate Programming.
+site_author: Johan Hidding
+copyright: "<a href=\"https://esciencecenter.nl/\">Netherlands eScience Center</a>"
+```
 
+and the configuration
+
+```yaml file="mkdocs.yml"
 <<theme>>
 
 markdown_extensions:
@@ -78,9 +88,9 @@ Install the material theme with `pip install mkdocs-material`
 ```yaml id="theme"
 theme:
         name: "material"
-        highlightjs: true
         palette:
-                scheme: "slate"
+                primary: "light blue"
+        #        scheme: "slate"
 ```
 
 ## Annotating code blocks
@@ -104,7 +114,7 @@ To enable syntax highlighting you need to configure `highlight.js`.
 ```
 
 ```yaml id="extra-css"
-- "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-dark.min.css"
+- "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-light.min.css"
 ```
 
 ```js file="docs/js/init.js"
@@ -112,6 +122,9 @@ hljs.initHighlightingOnLoad();
 ```
 
 ## Equations
+Here's everything we know about gravity
+
+\\[G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}\\]
 
 ```yaml id="markdown-extensions"
 - pymdownx.arithmatex
@@ -121,10 +134,4 @@ hljs.initHighlightingOnLoad();
 - "https://polyfill.io/v3/polyfill.min.js?features=es6"
 - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ```
-
-\\[\mathcal{H} = \frac
-{nl^2 p_{\theta}^2 + (m + n)k^2 p_{\varphi}^2 - 2nkl p_{\theta} p_{\varphi} \cos(\theta - \varphi)}
-{2nk^2l^2 \left(m + n \sin^2(\theta - \varphi)\right)}
-- (m + n)gk \cos{\theta} - ngl \cos{\varphi}.
-\\]
 

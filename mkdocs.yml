@@ -4,13 +4,20 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
-
+site_url: https://entangled.github.io/mkdocs
+repo_url: https://github.com/entangled/mkdocs
+site_description: >
+        Setup an MkDocs project that works with Entangled for Literate Programming.
+site_author: Johan Hidding
+copyright: "<a href=\"https://esciencecenter.nl/\">Netherlands eScience Center</a>"
+# ~\~ end
+# ~\~ begin <<docs/index.md|mkdocs.yml>>[1]
 # ~\~ begin <<docs/index.md|theme>>[0]
 theme:
         name: "material"
-        highlightjs: true
         palette:
-                scheme: "slate"
+                primary: "light blue"
+        #        scheme: "slate"
 # ~\~ end
 
 markdown_extensions:
@@ -31,7 +38,7 @@ markdown_extensions:
 
 extra_css:
         # ~\~ begin <<docs/index.md|extra-css>>[0]
-        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-dark.min.css"
+        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-light.min.css"
         # ~\~ end
 
 extra_javascript:
