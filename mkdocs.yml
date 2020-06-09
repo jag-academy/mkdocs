@@ -4,29 +4,43 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
+
+# ~\~ begin <<docs/index.md|theme>>[0]
 theme:
         name: "material"
         highlightjs: true
         palette:
                 scheme: "slate"
+# ~\~ end
+
 markdown_extensions:
+        # ~\~ begin <<docs/index.md|markdown-extensions>>[0]
         - pymdownx.superfences:
             custom_fences:
                - name: "*"
                  class: "codehilite"
                  format: !!python/name:entangled.pymd.format
                  validator: !!python/name:entangled.pymd.validator
+        # ~\~ end
+        # ~\~ begin <<docs/index.md|markdown-extensions>>[1]
         - pymdownx.arithmatex
+        # ~\~ end
         - admonition
         - toc:
             permalink: true
 
 extra_css:
+        # ~\~ begin <<docs/index.md|extra-css>>[0]
         - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-dark.min.css"
+        # ~\~ end
 
 extra_javascript:
-        - "https://polyfill.io/v3/polyfill.min.js?features=es6"
-        - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        # ~\~ begin <<docs/index.md|extra-javascript>>[0]
         - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"
         - js/init.js
+        # ~\~ end
+        # ~\~ begin <<docs/index.md|extra-javascript>>[1]
+        - "https://polyfill.io/v3/polyfill.min.js?features=es6"
+        - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+        # ~\~ end
 # ~\~ end

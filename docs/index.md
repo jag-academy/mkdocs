@@ -10,7 +10,7 @@ This is a setup of Entangled with MkDocs, using:
 ## Prep
 
 - Install `entangled` following the instructions at [entangled.github.io](https://entangled.github.io/#section-entangled).
-- Install the `entangled` Python module by running `pip install entangled`
+- Install the `entangled` Python module by running `pip install entangled-filters`
 - Install `mkdocs` by running `pip install mkdocs`
 - Install material theme `pip install mkdocs-material`
 
@@ -56,31 +56,55 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
-theme:
-        name: "material"
-        highlightjs: true
-        palette:
-                scheme: "slate"
+
+<<theme>>
+
 markdown_extensions:
-        - pymdownx.superfences:
-            custom_fences:
-               - name: "*"
-                 class: "codehilite"
-                 format: !!python/name:entangled.pymd.format
-                 validator: !!python/name:entangled.pymd.validator
-        - pymdownx.arithmatex
+        <<markdown-extensions>>
         - admonition
         - toc:
             permalink: true
 
 extra_css:
-        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-dark.min.css"
+        <<extra-css>>
 
 extra_javascript:
-        - "https://polyfill.io/v3/polyfill.min.js?features=es6"
-        - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"
-        - js/init.js
+        <<extra-javascript>>
+```
+
+## Material theme
+Install the material theme with `pip install mkdocs-material`
+
+```yaml id="theme"
+theme:
+        name: "material"
+        highlightjs: true
+        palette:
+                scheme: "slate"
+```
+
+## Annotating code blocks
+The `entangled-filters` module, while mainly dedicated to Pandoc support, has a few functions to help us pass metadata through `mkdocs`. By default, `mkdocs` will not allow any extra attributes to be added to the code blocks. We need to configure `pymdownx.superfences` extension to get what we need.
+
+```yaml id="markdown-extensions"
+- pymdownx.superfences:
+    custom_fences:
+       - name: "*"
+         class: "codehilite"
+         format: !!python/name:entangled.pymd.format
+         validator: !!python/name:entangled.pymd.validator
+```
+
+## Highlighting
+To enable syntax highlighting you need to configure `highlight.js`.
+
+```yaml id="extra-javascript"
+- "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"
+- js/init.js
+```
+
+```yaml id="extra-css"
+- "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-dark.min.css"
 ```
 
 ```js file="docs/js/init.js"
@@ -88,6 +112,15 @@ hljs.initHighlightingOnLoad();
 ```
 
 ## Equations
+
+```yaml id="markdown-extensions"
+- pymdownx.arithmatex
+```
+
+```yaml id="extra-javascript"
+- "https://polyfill.io/v3/polyfill.min.js?features=es6"
+- "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+```
 
 \\[\mathcal{H} = \frac
 {nl^2 p_{\theta}^2 + (m + n)k^2 p_{\varphi}^2 - 2nkl p_{\theta} p_{\varphi} \cos(\theta - \varphi)}
