@@ -1,0 +1,19 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+  - init: |
+      cabal update
+      stack build
+  - name: Simulating make watch
+    command: make watch-pandoc
+  - name: starting daemn
+    command: entangled daemon
+    openMode: split-right
+  - name: start simple webserver
+    command: python3 -m http.server 8000
+    openMode: split-right
+    
+vscode:
+  extensions:
+    - haskell.haskell
+    - dhall.dhall-lang
