@@ -68,7 +68,7 @@ The rest of the program has:
 
 ## Imports
 
-``` {.elm #imports}
+``` {.elm #imports title="imports"}
 import Browser
 import Array exposing (Array, repeat, indexedMap, toList, set, get)
 import List exposing (concat)
