@@ -23,6 +23,7 @@ theme:
 
 markdown_extensions:
         # ~\~ begin <<docs/index.md|markdown-extensions>>[0]
+        - codehilite
         #this is anonther comment
         #- pymdownx.superfences:
         #    custom_fences:

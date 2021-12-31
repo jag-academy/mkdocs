@@ -50,7 +50,7 @@ module Main exposing (..)
 
 The `main` function tells Elm that we create an `element`
 
-``` {.elm #main}
+``` {.elm #main title="main"}
 main =
     Browser.element
         { init = init
