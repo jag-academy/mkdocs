@@ -31,9 +31,11 @@ In this project we use a different Markdown syntax than is standard with Entangl
 
 ~~~markdown
 ```cpp file="src/hello.cc"
+
 ```
 
 ```cpp id="print-hello"
+
 ```
 ~~~
 
@@ -56,6 +58,7 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
+        - Slasher: "slasher.md"
 site_url: https://entangled.github.io/mkdocs
 repo_url: https://github.com/entangled/mkdocs
 site_description: >
@@ -97,12 +100,13 @@ theme:
 The `entangled-filters` module, while mainly dedicated to Pandoc support, has a few functions to help us pass metadata through `mkdocs`. By default, `mkdocs` will not allow any extra attributes to be added to the code blocks. We need to configure `pymdownx.superfences` extension to get what we need.
 
 ```yaml id="markdown-extensions"
-- pymdownx.superfences:
-    custom_fences:
-       - name: "*"
-         class: "codehilite"
-         format: !!python/name:entangled.pymd.format
-         validator: !!python/name:entangled.pymd.validator
+#this is anonther comment
+#- pymdownx.superfences:
+#    custom_fences:
+#       - name: "*"
+#         class: "codehilite"
+#         format: !!python/name:entangled.pymd.format
+#         validator: !!python/name:entangled.pymd.validator
 ```
 
 ## Highlighting

@@ -4,8 +4,9 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
+        - Slasher: "slasher.md"
 site_url: https://entangled.github.io/mkdocs
-repo_url: https://github.com/entangled/mkdocs
+repo_url: https://github.com/elviejo79/mkdocs/
 site_description: >
         Setup an MkDocs project that works with Entangled for Literate Programming.
 site_author: Johan Hidding
@@ -22,12 +23,13 @@ theme:
 
 markdown_extensions:
         # ~\~ begin <<docs/index.md|markdown-extensions>>[0]
-        - pymdownx.superfences:
-            custom_fences:
-               - name: "*"
-                 class: "codehilite"
-                 format: !!python/name:entangled.pymd.format
-                 validator: !!python/name:entangled.pymd.validator
+        #this is anonther comment
+        #- pymdownx.superfences:
+        #    custom_fences:
+        #       - name: "*"
+        #         class: "codehilite"
+        #         format: !!python/name:entangled.pymd.format
+        #         validator: !!python/name:entangled.pymd.validator
         # ~\~ end
         # ~\~ begin <<docs/index.md|markdown-extensions>>[1]
         - pymdownx.arithmatex

@@ -73,6 +73,8 @@ let languages = entangled.languages #
    there are other renderers that do not work well with that syntax. In that
    case you may whish to change these settings.
  -}
+ {-
+ 
 let syntax : entangled.Syntax =
     { matchCodeStart       = "^[ ]*```[[:alpha:]]+"
     , matchCodeEnd         = "^[ ]*```"
@@ -80,7 +82,7 @@ let syntax : entangled.Syntax =
     , extractReferenceName = "```[[:alpha:]]+[ ]+.*id=\"([^\"]*)\".*"
     , extractFileName      = "```[[:alpha:]]+[ ]+.*file=\"([^\"]*)\".*" 
     }
-
+-}
 {- Database
    --------
   
@@ -104,7 +106,8 @@ let watchList = [ "docs/**/*.md" ]
 in { entangled = entangled.Config :: { database = database
                                      , watchList = watchList
                                      , languages = languages
-                                     , syntax = syntax }
+                                    }
+                                     --, syntax = syntax }
 
 {- Extra options
    -------------
