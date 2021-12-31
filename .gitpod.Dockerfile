@@ -8,6 +8,8 @@
     RUN sudo apt-get install -y tmux
     RUN sudo apt-get install -y python3-pip
     RUN sudo pip install entangled-filters
+    RUN sudo pip install mkdocs
+    RUN sudo pip install mkdocs-material
     RUN sudo pip install cookiecutter
 
     RUN wget https://github.com/dhall-lang/dhall-haskell/releases/download/1.40.2/dhall-json-1.7.9-x86_64-linux.tar.bz2 && tar --extract --bzip2 --file ./dhall-json-1.7.9-x86_64-linux.tar.bz2 && sudo cp ./bin/dhall-to-json /usr/local/bin/

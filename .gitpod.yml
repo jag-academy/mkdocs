@@ -4,15 +4,13 @@ tasks:
   - init: |
       cabal update
       stack build
-  - name: Simulating make watch
-    command: make watch-pandoc
-  - name: starting daemn
+  - name: Entangled daemon
     command: entangled daemon
     openMode: split-right
-  - name: start simple webserver
-    command: python3 -m http.server 8000
+  - name: mkdocs serve
+    command: mkdocs serve
     openMode: split-right
-    
+
 vscode:
   extensions:
     - haskell.haskell
