@@ -16,11 +16,13 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
         index.md  # The documentation homepage.
         ...       # Other markdown pages, images and other files.
 
-## Code example space syntax
-must support code highlighthing
-id and title
 
-```haskell title="spacedSyntax"
+
+
+
+## code example braces syntax
+
+```{.haskell file="myfile.hs" title="spacedSyntax"}
 let syntax : entangled.Syntax =
     { matchCodeStart       = "^[ ]*```[[:alpha:]]+"
     , matchCodeEnd         = "^[ ]*```"
@@ -30,9 +32,11 @@ let syntax : entangled.Syntax =
     }
 ```
 
-## code example braces syntax
+## Code example space syntax
+must support code highlighthing
+id and title
 
-```{.haskell file="myfile.hs" title="spacedSyntax"}
+```haskell file="this should break.py" title="spacedSyntax"
 let syntax : entangled.Syntax =
     { matchCodeStart       = "^[ ]*```[[:alpha:]]+"
     , matchCodeEnd         = "^[ ]*```"
