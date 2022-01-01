@@ -32,7 +32,7 @@ let syntax : entangled.Syntax =
 
 ## code example braces syntax
 
-```{.haskell title="spacedSyntax"}
+```{.haskell file="myfile.hs" title="spacedSyntax"}
 let syntax : entangled.Syntax =
     { matchCodeStart       = "^[ ]*```[[:alpha:]]+"
     , matchCodeEnd         = "^[ ]*```"
