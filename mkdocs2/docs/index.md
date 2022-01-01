@@ -18,7 +18,17 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
 
 
+## code example entangled syntax
 
+```{.haskell #spacedSyntax file="myfile.hs" title="spacedSyntax"}
+let syntax : entangled.Syntax =
+    { matchCodeStart       = "^[ ]*```[[:alpha:]]+"
+    , matchCodeEnd         = "^[ ]*```"
+    , extractLanguage      = "```([[:alpha:]]+)"
+    , extractReferenceName = "```[[:alpha:]]+[ ]+.*id=\"([^\"]*)\".*"
+    , extractFileName      = "```[[:alpha:]]+[ ]+.*file=\"([^\"]*)\".*" 
+    }
+```
 
 ## code example braces syntax
 
