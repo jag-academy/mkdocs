@@ -3,9 +3,9 @@
 # Entangled and MkDocs
 This is a setup of Entangled with MkDocs, using:
 
-- highlight.js
+- mkdocs-material theme (which is almost a cms)
 - mathjax
-- mkdocs-material theme
+
 
 ## Prep
 
@@ -30,11 +30,11 @@ let watchList = [ "docs/**/*.md" ]
 In this project we use a different Markdown syntax than is standard with Entangled.
 
 ~~~markdown
-```cpp file="src/hello.cc"
+```cpp title="file://src/hello.cc"
 
 ```
 
-```cpp id="print-hello"
+```cpp title="#print-hello"
 
 ```
 ~~~
@@ -47,18 +47,17 @@ let syntax : entangled.Syntax =
     , matchCodeEnd         = "^[ ]*```"
     , extractLanguage      = "```([[:alpha:]]+)"
     , extractReferenceName = "```[[:alpha:]]+[ ]+.*id=\"([^\"]*)\".*"
-    , extractFileName      = "```[[:alpha:]]+[ ]+.*file=\"([^\"]*)\".*" 
+    , extractFileName      = "```[[:alpha:]]+[ ]+.*file=\"([^\"]*)\".*"
     }
 ```
 
 To initiate a MkDocs project, you need a `mkdocs.yml` file. This contains the meta-data of the site,
 
-```yaml file="mkdocs.yml"
+```yaml title="file://mkdocs.yml"
 site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
-        - Slasher: "slasher.md"
 site_url: https://entangled.github.io/mkdocs
 repo_url: https://github.com/entangled/mkdocs
 site_description: >
@@ -69,7 +68,7 @@ copyright: "<a href=\"https://esciencecenter.nl/\">Netherlands eScience Center</
 
 and the configuration
 
-```yaml file="mkdocs.yml"
+```yaml title="file://mkdocs.yml"
 <<theme>>
 
 markdown_extensions:
@@ -88,54 +87,40 @@ extra_javascript:
 ## Material theme
 Install the material theme with `pip install mkdocs-material`
 
-```yaml id="theme"
+```yaml title="#theme"
 theme:
         name: "material"
-        palette:
-                primary: "light blue"
-        #        scheme: "slate"
 ```
 
 ## Annotating code blocks
 The `entangled-filters` module, while mainly dedicated to Pandoc support, has a few functions to help us pass metadata through `mkdocs`. By default, `mkdocs` will not allow any extra attributes to be added to the code blocks. We need to configure `pymdownx.superfences` extension to get what we need.
 
-```yaml id="markdown-extensions"
-#this is anonther comment
-#- pymdownx.superfences:
-#    custom_fences:
-#       - name: "*"
-#         class: "codehilite"
-#         format: !!python/name:entangled.pymd.format
-#         validator: !!python/name:entangled.pymd.validator
+```yaml title="#markdown-extensions"
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences
 ```
 
 ## Highlighting
 To enable syntax highlighting you need to configure `highlight.js`.
 
-```yaml id="extra-javascript"
-- "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"
-- js/init.js
+```yaml title="#extra-css"
+
 ```
 
-```yaml id="extra-css"
-- "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-light.min.css"
-```
-
-```js file="docs/js/init.js"
-hljs.initHighlightingOnLoad();
-```
 
 ## Equations
 Here's everything we know about gravity
 
 \\[G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}\\]
 
-```yaml id="markdown-extensions"
+```yaml title="#markdown-extensions"
 - pymdownx.arithmatex
 ```
 
-```yaml id="extra-javascript"
+```yaml title="#extra-javascript"
 - "https://polyfill.io/v3/polyfill.min.js?features=es6"
 - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ```
-

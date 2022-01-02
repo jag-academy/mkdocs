@@ -4,9 +4,8 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
-        - Slasher: "slasher.md"
 site_url: https://entangled.github.io/mkdocs
-repo_url: https://github.com/elviejo79/mkdocs/
+repo_url: https://github.com/entangled/mkdocs
 site_description: >
         Setup an MkDocs project that works with Entangled for Literate Programming.
 site_author: Johan Hidding
@@ -16,21 +15,15 @@ copyright: "<a href=\"https://esciencecenter.nl/\">Netherlands eScience Center</
 # ~\~ begin <<docs/index.md|theme>>[0]
 theme:
         name: "material"
-        palette:
-                primary: "light blue"
-        #        scheme: "slate"
 # ~\~ end
 
 markdown_extensions:
         # ~\~ begin <<docs/index.md|markdown-extensions>>[0]
-        - codehilite
-        #this is anonther comment
-        #- pymdownx.superfences:
-        #    custom_fences:
-        #       - name: "*"
-        #         class: "codehilite"
-        #         format: !!python/name:entangled.pymd.format
-        #         validator: !!python/name:entangled.pymd.validator
+        - pymdownx.highlight:
+            anchor_linenums: true
+        - pymdownx.inlinehilite
+        - pymdownx.snippets
+        - pymdownx.superfences
         # ~\~ end
         # ~\~ begin <<docs/index.md|markdown-extensions>>[1]
         - pymdownx.arithmatex
@@ -41,15 +34,11 @@ markdown_extensions:
 
 extra_css:
         # ~\~ begin <<docs/index.md|extra-css>>[0]
-        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/gruvbox-light.min.css"
+
         # ~\~ end
 
 extra_javascript:
         # ~\~ begin <<docs/index.md|extra-javascript>>[0]
-        - "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"
-        - js/init.js
-        # ~\~ end
-        # ~\~ begin <<docs/index.md|extra-javascript>>[1]
         - "https://polyfill.io/v3/polyfill.min.js?features=es6"
         - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
         # ~\~ end
