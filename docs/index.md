@@ -58,6 +58,7 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
+        - Experiments: "syntax_experiments.md"
 site_url: https://entangled.github.io/mkdocs
 repo_url: https://github.com/entangled/mkdocs
 site_description: >
