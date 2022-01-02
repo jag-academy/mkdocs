@@ -41,6 +41,20 @@ let syntax : entangled.Syntax =
     , extractFileName      = "```[[:alpha:]]+[ ]+.*file=\"([^\"]*)\".*" 
     }
 ```
+## Code example space syntax with title so
+must support code highlighthing
+id and title
+
+```haskell title="file://thisShouldBreak.py"
+let syntax : entangled.Syntax =
+    { matchCodeStart       = "^[ ]*```[[:alpha:]]+"
+    , matchCodeEnd         = "^[ ]*```"
+    , extractLanguage      = "```([[:alpha:]]+)"
+    , extractReferenceName = "```[[:alpha:]]+[ ]+.*id=\"([^\"]*)\".*"
+    , extractFileName      = "```[[:alpha:]]+[ ]+.*file=\"([^\"]*)\".*" 
+    }
+```
+
 
 ## Code example space syntax
 must support code highlighthing
