@@ -13,41 +13,38 @@ documentation. At the root of your repository, create a new GitHub Actions
 workflow, e.g. `.github/workflows/ci.yml`, and copy and paste the following
 contents:
 
-=== "Material for MkDocs"
-
-    ```yaml title="file://.github/workflows/ci.yml"
-    name: ci # (1)!
-    on:
-      push:
-        branches: # (2)!
-          - master
-    jobs:
-      deploy:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-python@v2
+```yaml title="file://.github/workflows/ci.yml"
+name: ci # (1)!
+on:
+  push:
+    branches: # (2)!
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
             with:
               python-version: 3.x
-          <<tangle_code_files>>
-          <<weave_mkdocs_site>>
+    <<tangle_code_files>>
+    <<weave_mkdocs_site>>
 
-    ```
+```
 
-    1.  You can change the name to your liking. 
+1.  You can change the name to your liking. 
 
-    2.  At some point, GitHub renamed `master` to `main`. If your default branch
+2.  At some point, GitHub renamed `master` to `main`. If your default branch
         is named `master`, you can safely remove `main`, vice versa.
 
-    3.  This is the place to install further [MkDocs plugins] or Markdown
-        extensions with `pip` to be used during the build:
+3.  This is the place to install further [MkDocs plugins] or Markdown extensions with `pip` to be used during the build:
 
-        ``` sh
-        pip install \
-          mkdocs-material \
-          mkdocs-awesome-pages-plugin \
-          ...
-        ```
+``` sh
+  pip install \
+    mkdocs-material \
+    mkdocs-awesome-pages-plugin \
+    ...
+```
 
 ## Tangle
 
