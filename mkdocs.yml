@@ -4,9 +4,9 @@ site_name: Entangled and MkDocs
 nav:
         - Home: "index.md"
         - About: "about.md"
-        - Slasher: "slasher.md"
+        - Experiments: "syntax_experiments.md"
 site_url: https://entangled.github.io/mkdocs
-repo_url: https://github.com/elviejo79/mkdocs/viejo79/mkdocs/
+repo_url: https://github.com/elviejo79/mkdocs/
 site_description: >
         Setup an MkDocs project that works with Entangled for Literate Programming.
 site_author: Johan Hidding
@@ -25,13 +25,13 @@ markdown_extensions:
         - pymdownx.inlinehilite
         - pymdownx.snippets
         - pymdownx.superfences
+        # ~\~ end
         # ~\~ begin <<docs/index.md|markdown-extensions>>[1]
         - pymdownx.arithmatex
         # ~\~ end
         - admonition
         - toc:
             permalink: true
-
 
 
 extra_javascript:
