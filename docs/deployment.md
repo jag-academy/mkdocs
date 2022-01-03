@@ -27,8 +27,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-    <<tangle_code_files>>
-    <<weave_mkdocs_site>>
+      <<tangle_code_files>>
+      <<weave_mkdocs_site>>
 
 ```
 
