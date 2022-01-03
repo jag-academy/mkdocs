@@ -90,7 +90,7 @@ Install the material theme with `pip install mkdocs-material`
 
 ```yaml title="#theme"
 theme:
-        name: "material"
+        name: material
 ```
 
 ## Annotating code blocks

@@ -6,7 +6,7 @@ nav:
         - About: "about.md"
         - Experiments: "syntax_experiments.md"
 site_url: https://entangled.github.io/mkdocs
-repo_url: https://github.com/elviejo79/mkdocs/
+repo_url: https://github.com/entangled/mkdocs
 site_description: >
         Setup an MkDocs project that works with Entangled for Literate Programming.
 site_author: Johan Hidding
@@ -33,9 +33,13 @@ markdown_extensions:
         - toc:
             permalink: true
 
+extra_css:
+        # ~\~ begin <<docs/index.md|extra-css>>[0]
+
+        # ~\~ end
 
 extra_javascript:
-        # ~\~ begin <<docs/index.md|extra-javascript>>[1]
+        # ~\~ begin <<docs/index.md|extra-javascript>>[0]
         - "https://polyfill.io/v3/polyfill.min.js?features=es6"
         - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
         # ~\~ end
