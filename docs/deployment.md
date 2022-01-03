@@ -1,23 +1,12 @@
 # Continuouns Integration
 
-In order to deploy this document there are two things that must happen: tangling and weaving
+When we making any commit in this repository we want to autamically take the literate programming documents in 'docs' and extract the code from them (tangle) and update the website where they are exposed (weaving).
 
-Tanglin means extract the code blocks from the markdown documents and create new source file from them. Using entangled
+To achive that automatation we are going to use GitHub actions.
 
-weaving in this context means publish the markdown documents to a gh pages site using mkdocs.
+## Basic structure of a GitHubAction
 
-# Weaving.
 I took  this material from [mkdocs-material](https://squidfunk.github.io/mkdocs-material/publishing-your-site/#github-pages)
-
-## GitHub Pages
-
-If you're already hosting your code on GitHub, [GitHub Pages] is certainly
-the most convenient way to publish your project documentation. It's free of
-charge and pretty easy to set up.
-
-  [GitHub Pages]: https://pages.github.com/
-
-### with GitHub Actions
 
 Using [GitHub Actions] you can automate the deployment of your project
 documentation. At the root of your repository, create a new GitHub Actions
@@ -32,7 +21,6 @@ contents:
       push:
         branches: # (2)!
           - master
-          - main
     jobs:
       deploy:
         runs-on: ubuntu-latest
@@ -41,8 +29,9 @@ contents:
           - uses: actions/setup-python@v2
             with:
               python-version: 3.x
-          - run: pip install mkdocs-material # (3)!
-          - run: mkdocs gh-deploy --force
+          <<tangle_code_files>>
+          <<weave_mkdocs_site>>
+
     ```
 
     1.  You can change the name to your liking. 
@@ -59,3 +48,21 @@ contents:
           mkdocs-awesome-pages-plugin \
           ...
         ```
+
+## Tangle
+
+We first need to generate all the code files from the literate markdown files. In order to do that we will entangled.
+
+```yaml title="#tangle_code_files"
+- run: pip install entangled-filters
+- run: wget https://github.com/entangled/entangled/releases/download/v1.2.4/entangled-1.2.4-x86_64-GNU-Linux.tar.xz && tar --extract --file entangled-1.2.4-x86_64-GNU-Linux.tar.xz && sudo cp -r ./entangled-1.2.4/* /usr/local/
+- run: entangled tangle -a
+```
+
+## Weaving
+Is the process of taking the literate markdown files and generating a beautiful website for humans to consume
+ 
+```yaml title="#weave_mkdocs_site"
+- run: pip install mkdocs-material # (3)!
+- run: mkdocs gh-deploy --force
+```
