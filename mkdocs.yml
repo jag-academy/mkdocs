@@ -1,33 +1,33 @@
 # ~\~ language=YAML filename=mkdocs.yml
-# ~\~ begin <<docs/index.md|mkdocs.yml>>[0]
-site_name: Entangled and MkDocs
+# ~\~ begin <<docs/setup.md|mkdocs.yml>>[0]
 nav:
         - Home: "index.md"
         - About: "about.md"
         - Experiments: "syntax_experiments.md"
         - Deployment: "deployment.md"
-site_url: https://entangled.github.io/mkdocs
-repo_url: https://github.com/entangled/mkdocs
+site_name: TODO insert your site name
+site_url: https://TODO.github.io/_project_name
+repo_url: https://github.com/TODO/mkdocs
 site_description: >
-        Setup an MkDocs project that works with Entangled for Literate Programming.
-site_author: Johan Hidding
-copyright: "<a href=\"https://esciencecenter.nl/\">Netherlands eScience Center</a>"
+        TODO describe your site
+site_author: TODO your name
+copyright: TODO your organization's name
 # ~\~ end
-# ~\~ begin <<docs/index.md|mkdocs.yml>>[1]
-# ~\~ begin <<docs/index.md|theme>>[0]
+# ~\~ begin <<docs/setup.md|mkdocs.yml>>[1]
+# ~\~ begin <<docs/setup.md|theme>>[0]
 theme:
         name: material
 # ~\~ end
 
 markdown_extensions:
-        # ~\~ begin <<docs/index.md|markdown-extensions>>[0]
+        # ~\~ begin <<docs/setup.md|markdown-extensions>>[0]
         - pymdownx.highlight:
             anchor_linenums: true
         - pymdownx.inlinehilite
         - pymdownx.snippets
         - pymdownx.superfences
         # ~\~ end
-        # ~\~ begin <<docs/index.md|markdown-extensions>>[1]
+        # ~\~ begin <<docs/setup.md|markdown-extensions>>[1]
         - pymdownx.arithmatex
         # ~\~ end
         - admonition
@@ -35,12 +35,12 @@ markdown_extensions:
             permalink: true
 
 extra_css:
-        # ~\~ begin <<docs/index.md|extra-css>>[0]
+        # ~\~ begin <<docs/setup.md|extra-css>>[0]
 
         # ~\~ end
 
 extra_javascript:
-        # ~\~ begin <<docs/index.md|extra-javascript>>[0]
+        # ~\~ begin <<docs/setup.md|extra-javascript>>[0]
         - "https://polyfill.io/v3/polyfill.min.js?features=es6"
         - "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
         # ~\~ end
