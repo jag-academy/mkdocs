@@ -10,9 +10,41 @@ This is a setup of Entangled with MkDocs, using:
 ## Prep
 
 - Install `entangled` (&ge; 1.2) following the instructions at [entangled.github.io](https://entangled.github.io/#section-entangled).
-- Install the `entangled-filters` Python module (&ge; 0.7) by running `pip install entangled-filters`
-- Install `mkdocs` by running `pip install mkdocs`
-- Install material theme `pip install mkdocs-material`
+
+```dockerfile title="#install_entangled"
+RUN wget https://github.com/entangled/entangled/releases/download/v1.2.4/entangled-1.2.4-x86_64-GNU-Linux.tar.xz && tar --extract --file entangled-1.2.4-x86_64-GNU-Linux.tar.xz && sudo cp -r ./entangled-1.2.4/* /usr/local/
+```
+
+- Install the `entangled-filters` Python module (&ge; 0.7)
+
+```dockerfile title="#install_filters"
+RUN sudo pip install entangled-filters
+```
+
+- Install `mkdocs`
+
+```dockerfile title="#install_mkdocs"
+RUN sudo pip install mkdocs
+```
+
+- Install material theme
+
+```dockerfile title="#install_mkdocs_material"
+RUN sudo pip install mkdocs-material
+```
+
+### This could be setup in a docker file with this structure
+
+```dockerfile title="file://.gitpod.Dockerfile"
+FROM gitpod/workspace-full
+
+<<install_entangled>>
+<<install_filters>>
+<<install_mkdocs>>
+<<install_mkdocs_material>>
+```
+
+
 
 ## Starting a project
 To run Entangled we need a `entangled.dhall` configuration file. The following command generates a file that you can edit to suit your needs.
