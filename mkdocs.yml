@@ -4,7 +4,8 @@ nav:
         - Home: "index.md"
         - About: "about.md"
         - Experiments: "syntax_experiments.md"
-        - Deployment: "deployment.md"
+        - Site config: "setup.md"
+        - Continous Deployment: "Deployment.md"
 site_name: TODO insert your site name
 site_url: https://TODO.github.io/_project_name
 repo_url: https://github.com/TODO/mkdocs
