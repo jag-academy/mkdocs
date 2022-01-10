@@ -68,13 +68,13 @@ Install Nix on any **Linux distribution**, **MacOS** or **Windows** (via WSL) vi
 
 
 
-```
+```sh title="#install-nix" 
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
 To improve build speed, it is highly suggested to set up a binary cache maintained by IOHK by doing the following:
 
-```
+```sh title="#setup-binary-cache"
 sudo mkdir -p /etc/nix
 cat <<EOF | sudo tee /etc/nix/nix.conf
 substituters = https://cache.nixos.org https://hydra.iohk.io
@@ -87,18 +87,18 @@ Before Nix works in your existing shells, you need to close them and open them a
 
 Once Nix is installed, log out and then log back in, so it is activated properly in your shell. Clone the following and check out the latest version of the node. Please refer to the [cardano-node releases page](https://github.com/input-output-hk/cardano-node/releases/latest) to ensure you are working with the latest version of this.
 
-```
+```sh title="#install-cardano-node"
 git clone https://github.com/input-output-hk/cardano-node
 cd cardano-node
 git fetch --all --recurse-submodules --tags
-git checkout tags/1.29.0
+git checkout tags/$latesttag
 ```
 
 Create a file in the root of the git repository we just cloned and save it as `plutus-tutorial.nix`:
 
 
 
-```
+```nix title="file://tutorials/plutus/plutus-tutorial.nix"
 { version ? "mainnet", pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/6525bbc06a39f26750ad8ee0d40000ddfdc24acb.tar.gz") { }}:
 let
   cardano-node-repo = import ./. { };
@@ -122,7 +122,7 @@ in pkgs.mkShell {
 
 and then load a shell with Nix using this file with the following command:
 
-```
+```sh title="#start-nix-shell"
 nix-shell plutus-tutorial.nix
 ```
 
@@ -144,7 +144,7 @@ This creates an environment with all dependencies listed in the â€œbuildInputsâ€
 Once you have recent versions of GHC and Cabal, make sure to use GHC 8.10.2 or later:
 
 
-```
+```sh title="#verify-ghc-version"
 [nix-shell:~]$ ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.10.4
 
@@ -539,3 +539,44 @@ cardano-cli query utxo --address $(cat script.addr) --mainnet
 ```
 
 At this point, you have successfully submitted your first Plutus transaction!
+
+--- 
+## Automating the tutorial.
+
+Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
+A script that looks like this:
+
+```sh title="file://tutorials/plutus/tests/scripted.test.sh"
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+<<install-nix>>
+
+<<setup-binary-cache>>
+
+latesttag=$(git describe --tags)
+
+<<install-cardano-node>>
+
+<<start-nix-shell>>
+
+```
+
+---
+
+## Inside nix-shell.
+
+Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
+A script that looks like this:
+
+```sh title="file://tutorials/plutus/tests/nix-shell.test.sh"
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+<<start-nix-shell>>
+
+<<verify-ghc-version>>
+```

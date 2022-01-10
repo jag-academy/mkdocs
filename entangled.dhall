@@ -64,6 +64,7 @@ let languages = entangled.languages #
     , { name = "Dockerfile", identifiers = ["dockerfile"], comment = entangled.comments.hash }
     , { name = "Shell", identifiers = ["sh", "shell", "bash"], comment = entangled.comments.hash }
     , { name = "markdown", identifiers = ["markdown"], comment = entangled.comments.xmlStyle }
+    , { name = "NIX", identifiers = ["nix"], comment = entangled.comments.hash }
     ]
 
 {- Syntax
