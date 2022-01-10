@@ -30,17 +30,17 @@ By writing a book / article intertwined with code.
 Then the code is separated in an operation named *Tangle*
 And the article is prepared for publication in an operation called *weaving*
 
-# Elments of a software tuterial
+# Elments of a software tutorial
 
 * Description of the software
 * Installation and setup
- - Prerequisites
- - Installation
- - Configuration (if needed)
+    * Prerequisites
+    * Installation
+    * Configuration (if needed)
 * Basic example
- - Example input
- - step by step instructions that the user should perform
- - Expected output
+    * Example input
+    * step by step instructions that the user should perform
+    * Expected output
 * Conclusion and next steps
 
 Given that I present a (basic tutorial to use pandoc)[../pandoc/]
