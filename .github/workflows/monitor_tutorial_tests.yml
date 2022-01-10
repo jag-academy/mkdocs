@@ -1,0 +1,26 @@
+# ~\~ language=YAML filename=.github/workflows/monitor_tutorial_tests.yml
+# ~\~ begin <<docs/example_tutorial_pandoc.md|.github/workflows/monitor_tutorial_tests.yml>>[0]
+name: Schedule test execution
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  pull_data:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      # Let's execute the testing script
+      - name: Execute test scripts for all the tutorials
+        run: find ./tutorials/ -name "*.test.sh" | xargs bash
+# ~\~ end
