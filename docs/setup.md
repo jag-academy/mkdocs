@@ -88,6 +88,8 @@ To initiate a MkDocs project, you need a `mkdocs.yml` file. This contains the me
 ```yaml title="file://mkdocs.yml"
 nav:
         - Home: "index.md"
+        - Documentation Rot: "doc_rot.md"
+        - An example tutorial: "example_tutorial_pandoc.md"
         - About: "about.md"
         - Experiments: "syntax_experiments.md"
         - Deployment: "deployment.md"

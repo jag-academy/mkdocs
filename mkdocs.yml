@@ -2,10 +2,11 @@
 # ~\~ begin <<docs/setup.md|mkdocs.yml>>[0]
 nav:
         - Home: "index.md"
+        - Documentation Rot: "doc_rot.md"
+        - An example tutorial: "example_tutorial_pandoc.md"
         - About: "about.md"
         - Experiments: "syntax_experiments.md"
-        - Site config: "setup.md"
-        - Continous Deployment: "Deployment.md"
+        - Deployment: "deployment.md"
 site_name: TODO insert your site name
 site_url: https://TODO.github.io/_project_name
 repo_url: https://github.com/TODO/mkdocs
