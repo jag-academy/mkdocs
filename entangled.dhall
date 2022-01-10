@@ -61,7 +61,9 @@ let intercalComment = entangled.Comment.Line "PLEASE NOTE: "
 let languages = entangled.languages #
     [ { name = "Unlambda", identifiers = ["unlambda"], comment = entangled.comments.hash }
     , { name = "Intercal", identifiers = ["intercal"], comment = intercalComment }
-    , { name = "Dockerfile", identifiers = ["dockerfile"], comment = entangled.comments.hash } 
+    , { name = "Dockerfile", identifiers = ["dockerfile"], comment = entangled.comments.hash }
+    , { name = "Shell", identifiers = ["sh", "shell", "bash"], comment = entangled.comments.hash }
+    , { name = "markdown", identifiers = ["markdown"], comment = entangled.comments.xmlStyle }
     ]
 
 {- Syntax
