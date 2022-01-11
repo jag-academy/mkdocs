@@ -19,7 +19,7 @@ A transaction is a piece of data that contains both inputs and outputs, and as o
 
 ![Plutus-transaction](diagram-plutus-transaction.png)
 
-  
+
 
 In short, inputs contain references to UTXOs introduced by previous transactions, and outputs are the new UTXOs that this transaction will produce. Also, if we think about it, this allows us to change the state of a smart contract since new data can be contained in the produced outputs.
 
@@ -68,8 +68,8 @@ Install Nix on any **Linux distribution**, **MacOS** or **Windows** (via WSL) vi
 
 
 
-```sh title="#install-nix" 
-sh <(curl -L https://nixos.org/nix/install) --daemon
+```sh title="#install-nix"
+# sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
 To improve build speed, it is highly suggested to set up a binary cache maintained by IOHK by doing the following:
@@ -88,10 +88,13 @@ Before Nix works in your existing shells, you need to close them and open them a
 Once Nix is installed, log out and then log back in, so it is activated properly in your shell. Clone the following and check out the latest version of the node. Please refer to the [cardano-node releases page](https://github.com/input-output-hk/cardano-node/releases/latest) to ensure you are working with the latest version of this.
 
 ```sh title="#install-cardano-node"
-git clone https://github.com/input-output-hk/cardano-node
+git clone --depth 1 https://github.com/input-output-hk/cardano-node
 cd cardano-node
 git fetch --all --recurse-submodules --tags
-git checkout tags/$latesttag
+
+#latesttag=$(git describe --tags)
+#git checkout tags/$latesttag
+git checkout tags/1.29.0
 ```
 
 Create a file in the root of the git repository we just cloned and save it as `plutus-tutorial.nix`:
@@ -123,7 +126,7 @@ in pkgs.mkShell {
 and then load a shell with Nix using this file with the following command:
 
 ```sh title="#start-nix-shell"
-nix-shell plutus-tutorial.nix
+nix-shell ./plutus-tutorial.nix
 ```
 
 This will take approximately five or ten minutes the first time you do it, you should see something similar to this:
@@ -180,7 +183,7 @@ At this point, the node will start syncing with the network, which will come use
 
 We need a Haskell program to compile our desired Plutus script. In this example we will use the [plutus-alwayssucceeds](https://github.com/input-output-hk/Alonzo-testnet/tree/main/resources/plutus-sources/plutus-alwayssucceeds) Plutus script.
 
-**Note** The “Plutus always succeeds” script is used in this tutorial *only as an example*, as it uses a very simple protection mechanism that does not perform any validation of funds. Therefore, we recommend that you do not deploy this contract on the mainnet. If you still want to deploy it on mainnet, you should use a more secure datum. 
+**Note** The “Plutus always succeeds” script is used in this tutorial *only as an example*, as it uses a very simple protection mechanism that does not perform any validation of funds. Therefore, we recommend that you do not deploy this contract on the mainnet. If you still want to deploy it on mainnet, you should use a more secure datum.
 
 
 
@@ -193,7 +196,7 @@ Note that, even though the program is part of the testnet examples, it will work
 
 ### 2. Serialize your Plutus on chain code
 
-By building the project, we generate a binary that compiles this script.
+By building nthe project, we generate a binary that compiles this script.
 
 ```
 cabal update
@@ -540,7 +543,7 @@ cardano-cli query utxo --address $(cat script.addr) --mainnet
 
 At this point, you have successfully submitted your first Plutus transaction!
 
---- 
+---
 ## Automating the tutorial.
 
 Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
@@ -556,9 +559,11 @@ IFS=$'\n\t'
 
 <<setup-binary-cache>>
 
-latesttag=$(git describe --tags)
+
 
 <<install-cardano-node>>
+
+cp ../tutorials/plutus/plutus-tutorial.nix .
 
 <<start-nix-shell>>
 
@@ -575,8 +580,6 @@ A script that looks like this:
 #!/bin/bash
 set -euo pipefail
 IFS=$'\n\t'
-
-<<start-nix-shell>>
 
 <<verify-ghc-version>>
 ```

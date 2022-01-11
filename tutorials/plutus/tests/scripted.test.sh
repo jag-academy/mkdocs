@@ -6,7 +6,7 @@ IFS=$'\n\t'
 
 
 # ~\~ begin <<docs/06-Plutus-transactions.md|install-nix>>[0]
-sh <(curl -L https://nixos.org/nix/install) --daemon
+# sh <(curl -L https://nixos.org/nix/install) --daemon
 # ~\~ end
 
 # ~\~ begin <<docs/06-Plutus-transactions.md|setup-binary-cache>>[0]
@@ -17,17 +17,22 @@ trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7R
 EOF
 # ~\~ end
 
-latesttag=$(git describe --tags)
+
 
 # ~\~ begin <<docs/06-Plutus-transactions.md|install-cardano-node>>[0]
-git clone https://github.com/input-output-hk/cardano-node
+git clone --depth 1 https://github.com/input-output-hk/cardano-node
 cd cardano-node
 git fetch --all --recurse-submodules --tags
-git checkout tags/$latesttag
+
+#latesttag=$(git describe --tags)
+#git checkout tags/$latesttag
+git checkout tags/1.29.0
 # ~\~ end
 
+cp ../tutorials/plutus/plutus-tutorial.nix .
+
 # ~\~ begin <<docs/06-Plutus-transactions.md|start-nix-shell>>[0]
-nix-shell plutus-tutorial.nix
+nix-shell ./plutus-tutorial.nix
 # ~\~ end
 
 # ~\~ end

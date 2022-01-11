@@ -4,10 +4,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# ~\~ begin <<docs/06-Plutus-transactions.md|start-nix-shell>>[0]
-nix-shell plutus-tutorial.nix
-# ~\~ end
-
 # ~\~ begin <<docs/06-Plutus-transactions.md|verify-ghc-version>>[0]
 [nix-shell:~]$ ghc --version
 The Glorious Glasgow Haskell Compilation System, version 8.10.4
