@@ -1,6 +1,6 @@
 src/*
 bin/*
-cardano-node/*
+cardano-node
 thisShouldBreak.py
 .entangled
 site
