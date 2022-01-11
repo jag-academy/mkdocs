@@ -1,9 +1,12 @@
 # ~\~ language=Shell filename=tutorials/plutus/tests/scripted.test.sh
 # ~\~ begin <<docs/06-Plutus-transactions.md|tutorials/plutus/tests/scripted.test.sh>>[0]
+# ~\~ begin <<docs/06-Plutus-transactions.md|execute-in-bash-strict-mode>>[0]
+#The shebang must be the first line of the file, but then it get's mixed with entangled comments
+# this script must be executed with `bash $name_of_script`
 #!/bin/bash
-set -euo pipefail
+set -xeuo pipefail
 IFS=$'\n\t'
-
+# ~\~ end
 
 # ~\~ begin <<docs/06-Plutus-transactions.md|install-nix>>[0]
 # sh <(curl -L https://nixos.org/nix/install) --daemon
