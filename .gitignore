@@ -1,5 +1,6 @@
 src/*
 bin/*
+api.key
 cardano-node
 thisShouldBreak.py
 .entangled
