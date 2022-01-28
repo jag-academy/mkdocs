@@ -1,7 +1,7 @@
 src/*
 bin/*
-secret/*
-temp/*
+*/secrets/*
+*/temp/*
 *key
 cardano-node
 thisShouldBreak.py
