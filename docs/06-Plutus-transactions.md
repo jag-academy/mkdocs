@@ -3,7 +3,7 @@ title: How to write Plutus transactions
 metaTitle: How to write Plutus transactions
 ---
 
-nThis tutorial outlines what a Plutus transaction is and how to write one. This is done in the follow sequence:
+This tutorial outlines what a Plutus transaction is and how to write one. This is done in the follow sequence:
 
 1. Write your Plutus **on chain** code.
 2. Serialize your Plutus **on chain** code to the text envelope format (`cardano-cli` expects this format).
@@ -174,7 +174,6 @@ In a *new* terminal, i.e. the cardano node should still be running in the old te
 
 ```sh title="#ensure-you-are-in-alonzo"
 
-export NETWORK_ID="--testnet-magic 1097911063" # or "--mainnet"
 cardano-cli query tip ${NETWORK_ID}
 ```
 
@@ -200,22 +199,22 @@ We must first create a payment key-pair and a wallet address if you haven't alre
 
 ```sh title="#generate-wallets"
 cardano-cli address key-gen \
---verification-key-file payment.vkey \
---signing-key-file payment.skey
+--verification-key-file ./temp/$OWNER.vkey \
+--signing-key-file ./temp/$OWNER.skey
 
 cardano-cli stake-address key-gen \
---verification-key-file stake.vkey \
---signing-key-file stake.skey
+--verification-key-file ./temp/$OWNER.stake.vkey \
+--signing-key-file ./temp/$OWNER.stake.skey
 
 cardano-cli address build \
---payment-verification-key-file payment.vkey \
---stake-verification-key-file stake.vkey \
---out-file payment.addr \
+--payment-verification-key-file ./temp/$OWNER.vkey \
+--stake-verification-key-file ./temp/$OWNER.stake.vkey \
+--out-file ./temp/$OWNER.addr \
 $NETWORK_ID
 ```
 
 ```sh title="#generate-wallets"
-cat payment.addr
+
 ```
 
 Make sure to generate an additional wallet using the same steps above, so you can test transactions between these addresses.
@@ -228,21 +227,19 @@ In this simple transaction, we send funds from one personal address to another a
 First, we need to query the UTXOs in the `payment.addr`:
 
 ```sh title="#verify-payment-address-has-funds"
-
-
-cardano-cli query utxo --address ${PAYMENT1_ADDR} $NETWORK_ID
-
-export UTXO_TXIX=$(cardano-cli query utxo $NETWORK_ID --address $PAYMENT1_ADDR | select_utxo_with_most_value)
-echo
-echo "UTxO:$UTXO_TXIX"
+cardano-cli query utxo --address ${ALICE_ADDR} $NETWORK_ID
 ```
-
-Taking into account you address has a balance, you should see something like this:
 
 ```sh
 TxHash                                                             TxIx  Amount
 --------------------------------------------------------------------------------------
 8c6f74370d823130847efe3d2e2e128f0e79c8e907fda692353d841dd0d6cb38   0     1000000000 lovelace + TxOutDatumHashNone
+```
+
+```sh title="#read-utxo-to-variable"
+readonly UTXO_TXIX=$(cardano-cli query utxo $NETWORK_ID --address $ALICE_ADDR | select_utxo_with_most_value)
+echo
+echo "UTxO:$UTXO_TXIX"
 ```
 
 Using this information, we can build a transaction:
@@ -251,10 +248,10 @@ Using this information, we can build a transaction:
 cardano-cli transaction build \
 --alonzo-era \
 $NETWORK_ID \
---change-address ${PAYMENT1_ADDR} \
+--change-address ${ALICE_ADDR} \
 --tx-in ${UTXO_TXIX} \
---tx-out $(cat payment2.addr)+5000000 \
---out-file tx.build
+--tx-out $(cat ./temp/bob.addr)+5000000 \
+--out-file ./temp/tx.build
 ```
 
 In the `--tx-in` argument we set the UTXO that we are using as input, the format of which is TxHash#TxIx.
@@ -268,15 +265,15 @@ What follows is to sign and submit the transaction:
 
 ```sh title="#sign-simple-transaction"
 cardano-cli transaction sign \
---tx-body-file tx.build \
+--tx-body-file ./temp/tx.build \
 $NETWORK_ID \
---signing-key-file payment.skey \
---out-file tx.signed
+--signing-key-file ./temp/alice.skey \
+--out-file ./temp/tx.signed
 
 ```
 
 ```sh title="#submit-simple-transaction"
-cardano-cli transaction submit --tx-file tx.signed $NETWORK_ID
+cardano-cli transaction submit --tx-file ./temp/tx.signed $NETWORK_ID
 ```
 
 ```sh
@@ -286,7 +283,7 @@ Transaction successfully submitted.
 Now if we query payment2.addr we will have a new UTxO containing 500 ADAs:
 
 ```sh title="#query-2nd-address"
-cardano-cli query utxo --address $(cat payment2.addr) $NETWORK_ID
+cardano-cli query utxo --address $(cat ./temp/bob.addr) $NETWORK_ID
 ```
 
 ```sh
@@ -296,7 +293,7 @@ d7d207438c90fe611c1a14be29974b1662f8563331bf6fba4b6569e089ffa561 1      50000000
 ```
 
 ```sh title="#query-1st-address"
-cardano-cli query utxo --address ${PAYMENT1_ADDR} $NETWORK_ID
+cardano-cli query utxo --address ${ALICE_ADDR} $NETWORK_ID
 ```
 
 ```sh
@@ -384,21 +381,21 @@ First, calculate the script address:
 
 ```sh title="#calculate-script-address"
 cardano-cli address build \
---payment-script-file alwayssucceeds.plutus \
+--payment-script-file ./temp/alwayssucceeds.plutus \
 $NETWORK_ID \
---out-file script.addr
+--out-file ./temp/script.addr
 ```
 
 Now the script address is in the script.addr file:
 
 ```sh title="#calculate-script-address"
-cat script.addr
+cat ./temp/script.addr
 ```
 
 We do not attach the datum to a UTXO directly but we use its hash. To get the hash of the datum, run the following cardano-cli command:
 
 ```sh title="#get-datum-hash"
-export scriptdatumhash=$(cardano-cli transaction hash-script-data --script-data-value 42)
+export SCRIPTDATUMHASH=$(cardano-cli transaction hash-script-data --script-data-value 42)
 ```
 
 Next, get the protocol parameters and save them to a file named `pparams.json` using:
@@ -406,7 +403,7 @@ Next, get the protocol parameters and save them to a file named `pparams.json` u
 ```sh title="#get-protocol-parameters"
 cardano-cli query protocol-parameters \
 $NETWORK_ID \
---out-file pparams.json
+--out-file ./temp/pparams.json
 ```
 
 
@@ -416,12 +413,12 @@ Now, we should build the transaction that will send ADA to the script address of
 cardano-cli transaction build \
 --alonzo-era \
 $NETWORK_ID \
---change-address ${PAYMENT1_ADDR} \
+--change-address ${ALICE_ADDR} \
 --tx-in "$UTXO_TXIX" \
---tx-out $(cat script.addr)+1379280 \
---tx-out-datum-hash ${scriptdatumhash} \
---protocol-params-file pparams.json \
---out-file tx-script.build
+--tx-out $(cat ./temp/script.addr)+1379280 \
+--tx-out-datum-hash ${SCRIPTDATUMHASH} \
+--protocol-params-file ./temp/pparams.json \
+--out-file ./temp/tx-script.build
 ```
 
 Continue to sign the transaction with the signing key `payment.skey` and save this signed transaction in a file `tx-script.signed`:
@@ -429,16 +426,16 @@ Continue to sign the transaction with the signing key `payment.skey` and save th
 
 ```sh title="#sign-transaction-to-alwayssucceeds"
 cardano-cli transaction sign \
---tx-body-file tx-script.build \
---signing-key-file payment.skey \
+--tx-body-file ./temp/tx-script.build \
+--signing-key-file ./temp/alice.skey \
 $NETWORK_ID \
---out-file tx-script.signed
+--out-file ./temp/tx-script.signed
 ```
 
 Finally, submit the transaction:
 
 ```sh title="#submit-transaction-to-alwayssucceeds"
-cardano-cli transaction submit $NETWORK_ID --tx-file tx-script.signed
+cardano-cli transaction submit $NETWORK_ID --tx-file ./temp/tx-script.signed
 ```
 
 ```
@@ -448,7 +445,7 @@ Transaction successfully submitted.
 We can query both personal and script addresses:
 
 ```sh title="#query-personal-and-script-addresses"
-cardano-cli query utxo --address ${PAYMENT1_ADDR} $NETWORK_ID
+cardano-cli query utxo --address ${ALICE_ADDR} $NETWORK_ID
 ```
 
 ```sh
@@ -459,8 +456,8 @@ f5a618d579bc66e6199ae2a1ab4a73e2d8a73cba61a324c939346e9cf32bb33a 0    498284086 
 ```
 
 ```sh title="#get-script-address-balance"
-export SCRIPT_ADDR=$(cat script.addr)
-cardano-cli query utxo --address $SCRIPT_ADDR $NETWORK_ID | tee script_address_balance
+export SCRIPT_ADDR=$(cat ./temp/script.addr)
+cardano-cli query utxo --address $SCRIPT_ADDR $NETWORK_ID
 ```
 
 ```sh
@@ -472,12 +469,9 @@ f5a618d579bc66e6199ae2a1ab4a73e2d8a73cba61a324c939346e9cf32bb33a     1        13
 ```
 
 ```sh title="#plutusUtxoTxin"
-#copying rg from the test script directory to bin
-cp ./rg /bin/
-
-# export plutusutxotxin=68a947f8ccb6845d3abf67376680509b476ea1cca187a486a93703bf59493f19#1
-plutusutxotxin=$(cardano-cli query utxo --address $SCRIPT_ADDR $NETWORK_ID | rg "1379280"|tail -n1 | cut --delimiter=" " --output-delimiter="#" -f 1,6)
-readonly plutusutxotxin
+# export PLUTUSUTXOTXIN=68a947f8ccb6845d3abf67376680509b476ea1cca187a486a93703bf59493f19#1
+PLUTUSUTXOTXIN=$(cardano-cli query utxo --address $SCRIPT_ADDR $NETWORK_ID | grep "1379280"|tail -n1 | cut --delimiter=" " --output-delimiter="#" -f 1,6)
+readonly PLUTUSUTXOTXIN
 ```
 
 Now, we have sent funds to a script.
@@ -492,8 +486,8 @@ It results in two new UTXOs.
 Check the balances:
 
 ```sh title="#get-balance-2nd-address"
-export PAYMENT2_ADDR=$(cat payment2.addr)
-cardano-cli query utxo --address $PAYMENT2_ADDR $NETWORK_ID
+export BOB_ADDR=$(cat ./temp/bob.addr)
+cardano-cli query utxo --address $BOB_ADDR $NETWORK_ID
 ```
 
 ```sh
@@ -503,7 +497,7 @@ d7d207438c90fe611c1a14be29974b1662f8563331bf6fba4b6569e089ffa561 1     500000000
 ```
 
 ```sh title="#txCollateral"
-export txCollateral=$(cardano-cli query utxo $NETWORK_ID --address $PAYMENT2_ADDR | select_utxo_with_most_value)
+export txCollateral=$(cardano-cli query utxo $NETWORK_ID --address $BOB_ADDR | select_utxo_with_most_value)
 echo
 echo "txCollateral: $txCollateral"
 
@@ -516,14 +510,14 @@ Construct, sign, and submit the new transaction to unlock the funds:
 cardano-cli transaction build \
             --alonzo-era \
             $NETWORK_ID \
-            --tx-in ${plutusutxotxin} \
-            --tx-in-script-file alwayssucceeds.plutus \
+            --tx-in ${PLUTUSUTXOTXIN} \
+            --tx-in-script-file ./temp/alwayssucceeds.plutus \
             --tx-in-datum-value 42 \
             --tx-in-redeemer-value 42 \
             --tx-in-collateral ${txCollateral} \
-            --change-address ${PAYMENT1_ADDR} \
-            --protocol-params-file pparams.json \
-            --out-file test-alonzo.tx
+            --change-address ${ALICE_ADDR} \
+            --protocol-params-file ./temp/pparams.json \
+            --out-file ./temp/test-alonzo.tx
 ```
 
 If we use a UTXO that is part of a script address as an input of the transaction, we need to specify the `--tx-in-script-file --tx-in datum-value --tx-in-redeemer-value --tx-in-collateral` arguments after the `--tx-in` argument containing that UTXO:
@@ -531,14 +525,14 @@ If we use a UTXO that is part of a script address as an input of the transaction
 
 ```sh title="#sign-transaction-to-unlock-funds"
 cardano-cli transaction sign \
---tx-body-file test-alonzo.tx \
---signing-key-file payment2.skey \
+--tx-body-file ./temp/test-alonzo.tx \
+--signing-key-file ./temp/bob.skey \
 $NETWORK_ID \
---out-file test-alonzo.signed
+--out-file ./temp/test-alonzo.signed
 ```
 
 ```sh title="#submit-transaction-to-unlock-funds"
-cardano-cli transaction submit $NETWORK_ID --tx-file test-alonzo.signed
+cardano-cli transaction submit $NETWORK_ID --tx-file ./temp/test-alonzo.signed
 ```
 
 ```sh
@@ -548,11 +542,11 @@ Transaction successfully submitted.
 Now, if we query both addresses we can see that we have unlocked the funds:
 
 ```sh title="#query-both-addresses"
-cardano-cli query utxo --address $(cat payment2.addr) $NETWORK_ID
+echo "Bob address has the funds liberated"
+cardano-cli query utxo --address $(cat ./temp/bob.addr) $NETWORK_ID
 
-
-cardano-cli query utxo --address $(cat script.addr) $NETWORK_ID |rg "1379280"
-
+echo "now the contract address has one uxto less"
+cardano-cli query utxo --address $(cat ./temp/script.addr) $NETWORK_ID | grep "1379280"
 ```
 
 At this point, you have successfully submitted your first Plutus transaction!
@@ -560,6 +554,155 @@ At this point, you have successfully submitted your first Plutus transaction!
 ---
 
 ## Automating the tutorial.
+
+This tutorial is composed of four sections:
+
+- Installing Cardano Node with Nixos
+- Creating wallets
+- Submitting a simple non-plutus transaction
+- Submitting a plutus transaction
+
+On the following scripts we are going to automate what we told the user to type
+
+### Creating wallets
+```sh title="file://tutorials/plutus/scripts/10_create_wallets.sh"
+<<execute-in-bash-strict-mode>>
+
+#### Build and submit a simple (non-Plutus) transaction
+### Ensure that you have the latest tagged version era.
+
+<<ensure-you-are-in-alonzo>>
+
+
+function create_wallets(){
+    local OWNER=$1
+
+
+<<generate-wallets>>
+
+}
+
+create_wallets 'alice'
+
+# echo "Calling the faucet API to get some funds for our new wallets"
+# readonly APIKEY=$(cat ./secrets/api.key)
+# curl --insecure -v -XPOST "https://faucet.cardano-testnet.iohkdev.io/send-money/${ALICE_ADDR}?apiKey=${APIKEY}"
+
+
+### create a 2nd address
+
+create_wallets 'bob'
+echo "Wallets generated"
+
+### Once we have proven that the instructions to generate an address still work.
+#   We will copy the known good adressess
+
+cp ./secrets/* ./temp/
+
+
+<<read-payment-address-to-variable>>
+
+
+<<verify-payment-address-has-funds>>
+
+<<read-utxo-to-variable>>
+
+assert_there_is_txhash $UTXO_TXIX
+
+# Now that we know that the instructions to create wallets work.
+# let's substitute the files, with the ones we know have funds,
+# so that the following tests also work.
+
+
+```
+
+### Submit a simple non Plutus transaction
+```sh title="file://tutorials/plutus/scripts/20_submit_simple_transaction.sh"
+
+<<execute-in-bash-strict-mode>>
+
+<<read-payment-address-to-variable>>
+
+<<read-utxo-to-variable>>
+
+<<build-transaction>>
+
+<<sign-simple-transaction>>
+
+<<submit-simple-transaction>>
+
+echo "Awaiting Transaction to be committed..."
+sleep 60
+
+echo "and the 2nd payment adress has 50,000,000 *more* lovelaces"
+<<query-2nd-address>>
+
+echo "and the 1st payment adress has 50,000,000 *less* lovelaces"
+<<query-1st-address>>
+
+echo "End: We were able to submit a simple transaction"
+
+```
+
+### Submit a Plutus Transaction
+
+```sh title="file://tutorials/plutus/scripts/30_submit_plutus_transaction.sh"
+
+<<execute-in-bash-strict-mode>>
+
+<<ensure-you-are-in-alonzo>>
+
+<<calculate-script-address>>
+
+<<get-datum-hash>>
+
+<<get-protocol-parameters>>
+
+<<read-payment-address-to-variable>>
+
+<<read-utxo-to-variable>>
+
+<<build-transaction-to-alwayssucceeds>>
+
+<<sign-transaction-to-alwayssucceeds>>
+
+<<submit-transaction-to-alwayssucceeds>>
+
+<<query-personal-and-script-addresses>>
+
+<<get-script-address-balance>>
+
+<<ensure-you-are-in-alonzo>>
+
+<<get-script-address-balance>>
+
+#copying busybox from the test script directory to bin
+cp ./busybox /bin/
+ln -s -T /bin/busybox /bin/grep
+
+
+
+<<plutusUtxoTxin>>
+
+
+### 4. Submit transaction to execute Plutus script
+
+<<get-balance-2nd-address>>
+
+<<txCollateral>>
+
+<<build-transaction-to-unlock-funds>>
+
+<<sign-transaction-to-unlock-funds>>
+
+<<submit-transaction-to-unlock-funds>>
+
+<<query-both-addresses>>
+```
+
+
+
+----
 
 Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
 A script that looks like this:
@@ -601,6 +744,23 @@ function select_utxo_with_most_value()
             tail --lines=1 > /dev/stdout
 }
 
+assert_not_empty(){
+    [ "$var" ] || { echo "Parameter 1 is empty" ; exit 1; }
+}
+
+assert_there_is_txhash(){
+    local var="$1"
+    [ ${#var} == 66 ] || { echo "TxHash can't be empty" ; exit 1; }
+}
+
+readonly CARDANO_NODES_OCKET_PATH=/ipc/node.socket
+readonly NETWORK_ID="--testnet-magic 1097911063" # or "--mainnet"
+```
+
+```sh title="#read-payment-address-to-variable"
+readonly ALICE_ADDR=$(cat ./temp/alice.addr)
+echo
+echo "Payment address is: $ALICE_ADDR"
 
 ```
 
@@ -622,189 +782,6 @@ cd cardano-node
 
 ```
 
-```sh title="#read-payment-address-to-variable"
-export PAYMENT1_ADDR=$(cat payment.addr)
-echo
-echo "Payment address is: $PAYMENT1_ADDR"
-
-```
-
-## On a new terminal
-
-```sh title="file://tutorials/plutus/tests/simple-non-plutus-transaction.sh"
-<<execute-in-bash-strict-mode>>
-
-#### Build and submit a simple (non-Plutus) transaction
-### Ensure that you have the latest tagged version era.
-
-export CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
-
-<<ensure-you-are-in-alonzo>>
-
-if [ ! -f payment.addr ]
-then
-echo "There is not a payment.addr file so we are going to genrate a new wallet"
-
-<<generate-wallets>>
-
-export APIKEY=$(cat api.key)
-curl -v -XPOST "https://faucet.cardano-testnet.iohkdev.io/send-money/${PAYMENT1_ADDR}?apiKey=${APIKEY}"
-
-fi
-
-<<read-payment-address-to-variable>>
-
-
-<<verify-payment-address-has-funds>>
-
-### create a 2nd address
-
-if [ ! -f payment2.addr ]
-then
-cardano-cli address key-gen \
---verification-key-file payment2.vkey \
---signing-key-file payment2.skey
-
-cardano-cli stake-address key-gen \
---verification-key-file stake2.vkey \
---signing-key-file stake2.skey
-
-cardano-cli address build \
---payment-verification-key-file payment2.vkey \
---stake-verification-key-file stake2.vkey \
---out-file payment2.addr \
-$NETWORK_ID
-
-cat payment2.addr
-fi
-
-<<build-transaction>>
-
-<<sign-simple-transaction>>
-
-<<submit-simple-transaction>>
-
-echo "Awaiting Transaction to be committed..."
-sleep 60
-
-echo "and the 2nd payment adress has 50,000,000 *more* lovelaces"
-<<query-2nd-address>>
-
-echo "and the 1st payment adress has 50,000,000 *less* lovelaces"
-<<query-1st-address>>
-
-echo "End: We were able to submit a simple transaction"
-
-```
-
-### Temporarily
-
-
-```sh title="file://tutorials/plutus/tests/plutus-transaction-alwayssucceeds.test.sh"
-<<execute-in-bash-strict-mode>>
-
-### Ensure that you have the latest tagged version era.
-
-export CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
-
-<<ensure-you-are-in-alonzo>>
-
-<<calculate-script-address>>
-
-<<get-datum-hash>>
-
-<<get-protocol-parameters>>
-
-<<read-payment-address-to-variable>>
-
-<<verify-payment-address-has-funds>>
-
-<<build-transaction-to-alwayssucceeds>>
-
-<<sign-transaction-to-alwayssucceeds>>
-
-<<submit-transaction-to-alwayssucceeds>>
-
-<<query-personal-and-script-addresses>>
-
-<<get-script-address-balance>>
-
-```
-
-
-```sh title="file://tutorials/plutus/tests/plutus-execute-script.test.sh"
-<<execute-in-bash-strict-mode>>
-
-#### Build and submit a simple (non-Plutus) transaction
-### Ensure that you have the latest tagged version era.
-
-
-
-export CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
-
-<<read-payment-address-to-variable>>
-
-<<ensure-you-are-in-alonzo>>
-
-<<get-script-address-balance>>
-
-<<plutusUtxoTxin>>
-
-<<read-payment-address-to-variable>>
-
-### 4. Submit transaction to execute Plutus script
-
-<<get-balance-2nd-address>>
-
-<<txCollateral>>
-
-<<build-transaction-to-unlock-funds>>
-
-<<sign-transaction-to-unlock-funds>>
-
-<<submit-transaction-to-unlock-funds>>
-
-<<query-both-addresses>>
-```
-
-``` sh
-
-### Write your Plutus on chain code
-cd /
-
-<<clone-plutus-alwayssucceeds>>
-
-<<serialize-on-chain-code>>
-
-<<execute-alwayssucceeds>>
-
-<<print-serialized-alwayssucceeds>>
-
-
-#### Transaction to lock funds
-
-<<calculate-script-address>>
-<<get-datum-hash>>
-<<get-protocol-parameters>>
-
-<<build-transaction-to-alwayssucceeds>>
-<<sign-transaction-to-alwayssucceeds>>
-<<submit-transaction-to-alwayssucceeds>>
-<<query-personal-and-script-addresses>>
-<<get-script-address-balance>>
-
-### 4. Submit transaction to execute Plutus script
-
-<<get-balance-2nd-address>>
-
-<<build-transaction-to-unlock-funds>>
-
-<<sign-transaction-to-unlock-funds>>
-
-<<submit-transaction-to-unlock-funds>>
-
-<<query-both-addresses>>
-```
 
 ---
 
@@ -823,7 +800,7 @@ And also Cardano-node and the cardano-cli must be together.
 So in order to do that I use docker compose architecture
 
 
-```yaml title="file://tutorials/plutus/tests/docker-compose.yml"
+```yaml title="file://tutorials/plutus/docker-compose.yml"
 version: '3'
 
 services:
@@ -832,7 +809,7 @@ services:
     volumes:
      - cardon_node_data:/data
      - node-ipc:/ipc
-     - ./:/test_scripts/
+     - ./:/plutus/
     environment:
       - NETWORK=testnet
   #this is a trick so that you must run `client cli`
@@ -840,8 +817,8 @@ services:
     image: inputoutput/cardano-node
     volumes:
       - node-ipc:/ipc
-      - ./:/test_scripts/
-    working_dir: /test_scripts/
+      - ./:/plutus/
+    working_dir: /plutus/
     tty: true
     stdin_open: true
     environment:
@@ -854,7 +831,7 @@ services:
   plutus-starter-kit:
     image: inputoutput/plutus-starter-devcontainer
     volumes:
-      - ./:/test_scripts/
+      - ./:/plutus/
 
 volumes:
   cardon_node_data:
@@ -878,10 +855,9 @@ docker-compose run node cli query tip --testnet-magic 1097911063
 
 Now to execute the tests:
 ```sh
-docker-compose run --entrypoint="/bin/bash" node ./simple-non-plutus-transaction.sh
-# I need to clone and compile plutus always succeeds
-docker-compose run --entrypoint="/bin/bash" node ./plutus-transaction-alwayssucceeds.test.sh
-docker-compose run --entrypoint="/bin/bash" node ./plutus-execute-script.test.sh
+docker-compose run --entrypoint="/bin/bash" node ./scripts/10_creating_wallets.sh"
+docker-compose run --entrypoint="/bin/bash" node ./scripts/20_submit_simple_transaction.sh"
+docker-compose run --entrypoint="/bin/bash" node ./scripts/30_submit_plutus_transaction.sh"
 ```
 we override the default entry point here so that it waits for a script file.
 

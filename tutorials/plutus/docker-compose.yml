@@ -1,0 +1,41 @@
+# ~\~ language=YAML filename=tutorials/plutus/docker-compose.yml
+# ~\~ begin <<docs/06-Plutus-transactions.md|tutorials/plutus/docker-compose.yml>>[0]
+version: '3'
+
+services:
+  cardano-node-server:
+    image: inputoutput/cardano-node
+    volumes:
+     - cardon_node_data:/data
+     - node-ipc:/ipc
+     - ./:/plutus/
+    environment:
+      - NETWORK=testnet
+  #this is a trick so that you must run `client cli`
+  node:
+    image: inputoutput/cardano-node
+    volumes:
+      - node-ipc:/ipc
+      - ./:/plutus/
+    working_dir: /plutus/
+    tty: true
+    stdin_open: true
+    environment:
+      - CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
+    profiles:
+      - node
+    depends_on:
+      - cardano-node-server
+
+  plutus-starter-kit:
+    image: inputoutput/plutus-starter-devcontainer
+    volumes:
+      - ./:/plutus/
+
+volumes:
+  cardon_node_data:
+    external: true
+  node-ipc:
+    external: true
+
+# ~\~ end
