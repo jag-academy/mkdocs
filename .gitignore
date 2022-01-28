@@ -1,8 +1,7 @@
 src/*
 bin/*
-**/secrets/
-**/temp/
-*key
+**/secrets/**
+**/temp/**
 cardano-node
 thisShouldBreak.py
 .entangled
