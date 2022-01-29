@@ -597,7 +597,8 @@ echo "Wallets generated"
 ### Once we have proven that the instructions to generate an address still work.
 #   We will copy the known good adressess
 
-cp ./secrets/* ./temp/
+cp ./secrets/alice* ./temp/
+cp ./secrets/bob* ./temp/
 
 
 <<read-payment-address-to-variable>>
@@ -679,7 +680,6 @@ echo "End: We were able to submit a simple transaction"
 #copying busybox from the test script directory to bin
 cp ./busybox /bin/
 ln -s -T /bin/busybox /bin/grep
-
 
 
 <<plutusUtxoTxin>>

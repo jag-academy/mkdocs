@@ -115,7 +115,6 @@ cp ./busybox /bin/
 ln -s -T /bin/busybox /bin/grep
 
 
-
 # ~\~ begin <<docs/06-Plutus-transactions.md|plutusUtxoTxin>>[0]
 # export PLUTUSUTXOTXIN=68a947f8ccb6845d3abf67376680509b476ea1cca187a486a93703bf59493f19#1
 PLUTUSUTXOTXIN=$(cardano-cli query utxo --address $SCRIPT_ADDR $NETWORK_ID | grep "1379280"|tail -n1 | cut --delimiter=" " --output-delimiter="#" -f 1,6)

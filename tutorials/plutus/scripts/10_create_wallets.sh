@@ -77,7 +77,8 @@ echo "Wallets generated"
 ### Once we have proven that the instructions to generate an address still work.
 #   We will copy the known good adressess
 
-cp ./secrets/* ./temp/
+cp ./secrets/alice* ./temp/
+cp ./secrets/bob* ./temp/
 
 
 # ~\~ begin <<docs/06-Plutus-transactions.md|read-payment-address-to-variable>>[0]
