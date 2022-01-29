@@ -716,7 +716,8 @@ echo "Payment address is: $ALICE_ADDR"
 
 ## Inside nix-shell
 
-Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
+Now what we want is to create script / program that we can automatically execute
+with the steps we told the user to follow.
 A script that looks like this:
 
 ```sh
