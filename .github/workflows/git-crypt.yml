@@ -16,6 +16,7 @@ jobs:
         run: |
           which git-crypt || sudo apt install -y git-crypt
           echo "${{ secrets.GIT_CRYPT_KEY }}" | base64  --decode > ./production.env.key
+          cat ./production.env.key
           git-crypt unlock ./production.env.key
           rm ./production.env.key
           
