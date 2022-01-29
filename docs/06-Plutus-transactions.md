@@ -707,7 +707,7 @@ ln -s -T /bin/busybox /bin/grep
 Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
 A script that looks like this:
 
-```sh title="file://tutorials/plutus/tests/scripted.test.sh"
+```sh
 <<execute-in-bash-strict-mode>>
 
 <<install-nix>>
@@ -771,7 +771,7 @@ echo "Payment address is: $ALICE_ADDR"
 Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
 A script that looks like this:
 
-```sh title="file://tutorials/plutus/tests/start-cardano-node.test.sh"
+```sh
 <<execute-in-bash-strict-mode>>
 
 <<verify-ghc-version>>
