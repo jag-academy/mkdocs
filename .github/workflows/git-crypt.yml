@@ -1,4 +1,4 @@
-name: CD
+name: git-crypt
 on:
   push:
     branches:
@@ -7,21 +7,15 @@ on:
     branches:
       - master
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
+    name: Test git-crypt-unlock
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@master
       - name: Unlock secrets
-        uses: sliteteam/github-action-git-crypt-unlock@master
+        uses: sliteteam/github-action-git-crypt-unlock@1.2.0
         env:
           GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
-
       - name: let's copy the golden master files
         run: |
           cp ./secrets/alice.addr ./temp/alice.addr
