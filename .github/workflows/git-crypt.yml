@@ -16,10 +16,8 @@ jobs:
         run: |
           which git-crypt || sudo apt install -y git-crypt
           echo "${{ secrets.GIT_CRYPT_KEY }}" | base64  --decode > ./production.env.key
-          git-crypt migrate-key ./production.env.key ./production2.env.key
-          git-crypt unlock ./production2.env.key
+          git-crypt unlock ./production.env.key
           rm ./production.env.key
-          rm ./production2.env.key
           
       - name: let's copy the golden master files
         run: |
