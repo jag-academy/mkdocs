@@ -20,7 +20,8 @@ jobs:
       - name: Unlock secrets
         uses: sliteteam/github-action-git-crypt-unlock@master
         env:
-          GIT_CRYPT_KEY: "AEdJVENSWVBUS0VZAAAAAgAAAAAAAAABAAAABAAAAAAAAAADAAAAIF85B7kFpHjz49GStZm1ctyWQv+o3qvHlbAiMB/VgJQRAAAABQAAAEC4OV4QgSqUqF1ChA9uz6JT3F80yV5KjxMm6YqBZX+zRwsgWMqK+164ptiSy+Pfo+IrPH5boZfebV6IdCHl8/4NAAAAAA=="
+          env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
 
       - name: let's copy the golden master files
         run: |
