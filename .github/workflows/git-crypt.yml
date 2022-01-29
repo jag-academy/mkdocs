@@ -22,5 +22,6 @@ jobs:
       - name: let's copy the golden master files
         run: |
           tree ./tutorials/plutus/
+          mkdir -p ./tutorials/plutus/temp/
           cp ./tutorials/plutus/secrets/alice.addr ./tutorials/plutus/temp/alice.addr
           cat ./tutorials/plutus/temp/alice.addr
