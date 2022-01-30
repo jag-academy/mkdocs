@@ -18,10 +18,9 @@ jobs:
           echo "${{ secrets.GIT_CRYPT_KEY }}" | base64  --decode > ./production.env.key
           git-crypt unlock ./production.env.key
           rm ./production.env.key
-          
       - name: trying to run all the tests
         run: |
           cd ./tutorials/plutus/
-          docker volume create --name=node-ipc`
+          docker volume create --name=node-ipc
           docker-compose up --detach
           ./run_all_scripts.sh

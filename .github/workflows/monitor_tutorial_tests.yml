@@ -22,5 +22,5 @@ jobs:
 
       # Let's execute the testing script
       - name: Execute test scripts for all the tutorials
-        run: find ./tutorials/ -name "*.test.sh" | xargs bash
+        run: find ./tutorials/ -name "*.test.sh" -print0 | xargs bash
 # ~\~ end
