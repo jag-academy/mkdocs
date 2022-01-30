@@ -133,9 +133,6 @@ cardano-cli query utxo --address $BOB_ADDR $NETWORK_ID
 export txCollateral=$(cardano-cli query utxo $NETWORK_ID --address $BOB_ADDR | select_utxo_with_most_value)
 echo
 echo "txCollateral: $txCollateral"
-
-
-
 # ~\~ end
 
 # ~\~ begin <<docs/06-Plutus-transactions.md|build-transaction-to-unlock-funds>>[0]

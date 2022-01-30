@@ -751,41 +751,34 @@ So in order to do that I use docker compose architecture
 version: '3'
 
 services:
-  cardano-node-server:
+  cardano-node:
     image: inputoutput/cardano-node
     volumes:
-     - cardon_node_data:/data
+     - ./cardano-testnet-1097911063/_data:/data
      - node-ipc:/ipc
-     - ./:/plutus/
     environment:
       - NETWORK=testnet
-  #this is a trick so that you must run `client cli`
+
   node:
     image: inputoutput/cardano-node
     volumes:
-      - node-ipc:/ipc
-      - ./:/plutus/
-    working_dir: /plutus/
+      - node-ipc:/ipc:ro
     tty: true
     stdin_open: true
     environment:
       - CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
+    command: cli
     profiles:
-      - node
+      - cardano
     depends_on:
-      - cardano-node-server
+      - cardano-node
 
-  plutus-starter-kit:
+  plutus:
     image: inputoutput/plutus-starter-devcontainer
-    volumes:
-      - ./:/plutus/
 
 volumes:
-  cardon_node_data:
-    external: true
   node-ipc:
     external: true
-
 ```
 
 Then you can execute start the architecture simply as:
