@@ -24,7 +24,7 @@ assert_there_is_txhash(){
     [ ${#var} == 66 ] || { echo "TxHash can't be empty" ; exit 1; }
 }
 
-readonly CARDANO_NODES_OCKET_PATH=/ipc/node.socket
+readonly CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
 readonly NETWORK_ID="--testnet-magic 1097911063" # or "--mainnet"
 # ~\~ end
 
