@@ -22,5 +22,6 @@ jobs:
       - name: trying to run all the tests
         run: |
           cd ./tutorials/plutus/
+          docker volume create --name=node-ipc`
           docker-compose up --detach
           ./run_all_scripts.sh
