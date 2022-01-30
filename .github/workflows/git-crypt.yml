@@ -19,9 +19,8 @@ jobs:
           git-crypt unlock ./production.env.key
           rm ./production.env.key
           
-      - name: let's copy the golden master files
+      - name: trying to run all the tests
         run: |
-          tree ./tutorials/plutus/
-          mkdir -p ./tutorials/plutus/temp/
-          cp ./tutorials/plutus/secrets/alice.addr ./tutorials/plutus/temp/alice.addr
-          cat ./tutorials/plutus/temp/alice.addr
+          cd ./tutorials/plutus/
+          docker-compose up --detach
+          ./run_all_scripts.sh
