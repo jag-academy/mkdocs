@@ -24,3 +24,5 @@ jobs:
           docker volume create --name=node-ipc
           docker-compose up --detach
           ./run_all_scripts.sh
+      - name: stop the docker-compose server
+        run: cd ./tutorials/plutus/ && docker-compose down
