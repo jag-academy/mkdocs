@@ -15,6 +15,7 @@ services:
     image: inputoutput/cardano-node
     volumes:
       - node-ipc:/ipc:ro
+      - ./:/plutus/
     tty: true
     stdin_open: true
     environment:
