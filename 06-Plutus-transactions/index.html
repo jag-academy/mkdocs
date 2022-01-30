@@ -1,0 +1,1141 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TODO describe your site
+">
+      
+      
+        <meta name="author" content="TODO your name">
+      
+      
+        <link rel="canonical" href="https://TODO.github.io/_project_name/06-Plutus-transactions/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.8">
+    
+    
+      
+        <title>How to write Plutus transactions - TODO insert your site name</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6e60f8b8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-is-a-plutus-transaction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="TODO insert your site name" class="md-header__button md-logo" aria-label="TODO insert your site name" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TODO insert your site name
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to write Plutus transactions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/TODO/mkdocs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="TODO insert your site name" class="md-nav__button md-logo" aria-label="TODO insert your site name" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    TODO insert your site name
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/TODO/mkdocs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../doc_rot/" class="md-nav__link">
+        Documentation Rot
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../example_tutorial_pandoc/" class="md-nav__link">
+        An example tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../syntax_experiments/" class="md-nav__link">
+        Experiments
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        Deployment
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-plutus-transaction" class="md-nav__link">
+    What is a Plutus transaction
+  </a>
+  
+    <nav class="md-nav" aria-label="What is a Plutus transaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why" class="md-nav__link">
+    Why
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when" class="md-nav__link">
+    When
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-environment" class="md-nav__link">
+    Setting up the environment
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-cardano-node" class="md-nav__link">
+    Running the cardano-node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ensure-that-you-have-the-latest-tagged-version-era" class="md-nav__link">
+    Ensure that you have the latest tagged version era
+  </a>
+  
+    <nav class="md-nav" aria-label="Ensure that you have the latest tagged version era">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-wallets" class="md-nav__link">
+    Generating Wallets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-submit-a-simple-non-plutus-transaction" class="md-nav__link">
+    Build and submit a simple (non-Plutus) transaction
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-your-plutus-on-chain-code" class="md-nav__link">
+    Write your Plutus on chain code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialize-your-plutus-on-chain-code" class="md-nav__link">
+    Serialize your Plutus on chain code
+  </a>
+  
+    <nav class="md-nav" aria-label="Serialize your Plutus on chain code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-the-plutus-alwayssucceeds-project" class="md-nav__link">
+    Execute the plutus-alwayssucceeds project
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transaction-to-lock-funds" class="md-nav__link">
+    Transaction to lock funds
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-submit-transaction-to-execute-plutus-script" class="md-nav__link">
+    4. Submit transaction to execute Plutus script
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automating-the-tutorial" class="md-nav__link">
+    Automating the tutorial
+  </a>
+  
+    <nav class="md-nav" aria-label="Automating the tutorial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-wallets" class="md-nav__link">
+    Creating wallets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submit-a-simple-non-plutus-transaction" class="md-nav__link">
+    Submit a simple non Plutus transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submit-a-plutus-transaction" class="md-nav__link">
+    Submit a Plutus Transaction
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bash-strict-mode" class="md-nav__link">
+    Bash strict mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inside-nix-shell" class="md-nav__link">
+    Inside nix-shell
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ultra" class="md-nav__link">
+    Ultra
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyper-how-to-run-this-infraestructure-in-github-actions" class="md-nav__link">
+    Hyper: How to run this infraestructure in GitHub actions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#todo-everything-again-but-with-nix" class="md-nav__link">
+    TODO : everything again but with Nix
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/TODO/mkdocs/edit/master/docs/06-Plutus-transactions.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+  <h1>How to write Plutus transactions</h1>
+
+<p>This tutorial outlines what a Plutus transaction is and how to write one. This is done in the follow sequence:</p>
+<ol>
+<li>Write your Plutus <strong>on chain</strong> code.</li>
+<li>Serialize your Plutus <strong>on chain</strong> code to the text envelope format (<code>cardano-cli</code> expects this format).</li>
+<li>Create your transaction with the accompanying Plutus script(s).</li>
+<li>Submit the transaction to execute Plutus script.</li>
+</ol>
+<h3 id="what-is-a-plutus-transaction">What is a Plutus transaction<a class="headerlink" href="#what-is-a-plutus-transaction" title="Permanent link">&para;</a></h3>
+<p>A transaction is a piece of data that contains both inputs and outputs, and as of the Alonzo era, they can also include Plutus scripts. <strong>Inputs</strong> are unspent outputs from previous transactions (UTxO). As soon as an UTxO is used as input in a transaction, it becomes spent and can never be used again. The <strong>output</strong> is specified by an <em>address</em> (a public key or public key hash) and a <em>value</em> (consisting of an ADA amount and optional additional native token amounts). This flow-diagram gives a better idea of what the components of a transaction are at a technical level:</p>
+<p><img alt="Plutus-transaction" src="diagram-plutus-transaction.png" /></p>
+<p>In short, inputs contain references to UTXOs introduced by previous transactions, and outputs are the new UTXOs that this transaction will produce. Also, if we think about it, this allows us to change the state of a smart contract since new data can be contained in the produced outputs.</p>
+<p>It is also important to define what <em>Plutus Tx</em> is. Plutus Tx is the name given to specially-delimited sections of a Haskell program that are used to compile the on-chain part of a contract application into Plutus Core (this compiled code is then used for validating a transaction, hence the "Tx"). The resulting Plutus Core expression can be part of transaction data or data stored on the ledger. These pieces of code require special processing on the blockchain and are referred to as <em>Plutus script</em>.</p>
+<h4 id="why">Why<a class="headerlink" href="#why" title="Permanent link">&para;</a></h4>
+<p>From a Plutus developer perspective, by using transactions, we can control the flow of execution of our Plutus script. Thus, a transaction can also be thought of as messages used to interact with the smart contract. Understanding transactions is a key concept to master the development of smart contracts.</p>
+<h4 id="when">When<a class="headerlink" href="#when" title="Permanent link">&para;</a></h4>
+<p>A transaction ought to be created by the wallet while evaluating the off-chain code. For now, we have to assemble the transaction using cardano-cli and place the compiled Plutus script inside. At later stages though, this will be automated by the user's wallet software. The transaction, once submitted, will be validated and, therefore, the Plutus code will be evaluated by a validator node. If the script evaluates successfully, the transaction will be considered as valid. If not, the transaction will be rejected.</p>
+<h3 id="setting-up-the-environment">Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permanent link">&para;</a></h3>
+<p>If you already have a Haskell development environment set up, feel free to skip this section, otherwise follow along, we will set up a suitable environment for compiling plutus scripts using Nix, alternatively, you can follow this <a href="https://docs.cardano.org/getting-started/installing-the-cardano-node">guide</a>.</p>
+<p>We will use Nix to provide both Haskell and Cabal, but if you desire, you could also rely on the ghcup tool to manage these dependencies. However, we won't cover this. You can refer to the official <a href="https://gitlab.haskell.org/haskell/ghcup-hs">ghcup</a> site for instructions on that approach.</p>
+<p>Nix is an amazing tool that, among other things, allows us to create isolated environments in which we can embed all dependencies needed for an application. These dependencies can even be system-level dependencies. Thus, we can create an isolated environment to ensure the application will work since all required dependencies are available.</p>
+<p>Install Nix on any <strong>Linux distribution</strong>, <strong>MacOS</strong> or <strong>Windows</strong> (via WSL) via the recommended <a href="https://nixos.org/manual/nix/stable/#chap-installation">multi-user installation</a>. In short, you need to run this at your terminal:</p>
+<div class="highlight"><span class="filename">#install-nix</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># sh &lt;(curl -L https://nixos.org/nix/install) --daemon</span>
+</code></pre></div>
+<p>To improve build speed, it is highly suggested to set up a binary cache maintained by IOHK by doing the following:</p>
+<div class="highlight"><span class="filename">#setup-binary-cache</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo mkdir -p /etc/nix
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat <span class="s">&lt;&lt;EOF | sudo tee /etc/nix/nix.conf</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="s">substituters = https://cache.nixos.org https://hydra.iohk.io</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="s">trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s">EOF</span>
+</code></pre></div>
+<p>Before Nix works in your existing shells, you need to close them and open them again. Other than that, you should be ready to go.</p>
+<p>Once Nix is installed, log out and then log back in, so it is activated properly in your shell. Clone the following and check out the latest version of the node. Please refer to the <a href="https://github.com/input-output-hk/cardano-node/releases/latest">cardano-node releases page</a> to ensure you are working with the latest version of this.</p>
+<div class="highlight"><span class="filename">#install-cardano-node</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git clone --depth <span class="m">1</span> https://github.com/input-output-hk/cardano-node
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span> cardano-node
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>git fetch --all --recurse-submodules --tags
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1">#latesttag=$(git describe --tags)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1">#git checkout tags/$latesttag</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>git checkout tags/1.29.0
+</code></pre></div>
+<p>Create a file in the root of the git repository we just cloned and save it as <code>plutus-tutorial.nix</code>:</p>
+<div class="highlight"><span class="filename">file://tutorials/plutus/plutus-tutorial.nix</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span> version <span class="o">?</span> <span class="s2">&quot;mainnet&quot;</span><span class="p">,</span> pkgs <span class="o">?</span> <span class="nb">import</span> <span class="p">(</span>fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/archive/6525bbc06a39f26750ad8ee0d40000ddfdc24acb.tar.gz&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="p">}}:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">let</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  <span class="ss">cardano-node-repo =</span> <span class="nb">import</span> <span class="o">.</span><span class="l">/.</span> <span class="p">{</span> <span class="p">};</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">in</span> pkgs<span class="o">.</span>mkShell <span class="p">{</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>  <span class="ss">buildInputs =</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    libsodium
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    cabal-install
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    zlib
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    haskell<span class="o">.</span>compiler<span class="o">.</span>ghc8104
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    haskellPackages<span class="o">.</span>haskell-language-server
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    cardano-node-repo<span class="o">.</span>scripts<span class="o">.</span><span class="s2">&quot;</span><span class="si">${</span>version<span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span>node
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    cardano-node-repo<span class="o">.</span>cardano-cli
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>  <span class="p">];</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>  <span class="ss">CARDANO_NODE_SOCKET_PATH =</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nb">builtins</span><span class="o">.</span><span class="nb">toString</span> <span class="o">.</span><span class="l">/.</span><span class="si">}</span><span class="s2">/state-node-</span><span class="si">${</span>version<span class="si">}</span><span class="s2">/node.socket&quot;</span><span class="p">;</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="p">}</span>
+</code></pre></div>
+<p>and then load a shell with Nix using this file with the following command:</p>
+<div class="highlight"><span class="filename">#start-nix-shell</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>nix-shell ./plutus-tutorial.nix
+</code></pre></div>
+<p>This will take approximately five or ten minutes the first time you do it, you should see something similar to this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>these paths will be fetched <span class="o">(</span><span class="m">445</span>.08 MiB download, <span class="m">5870</span>.53 MiB unpacked<span class="o">)</span>:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>/nix/store/04jc7s1006vhg3qj4fszg6bcljlyap1a-conduit-parse-0.2.1.0-doc
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>/nix/store/052kzx9p5fl52pk436i2jcsqkz3ni0r2-reflection-2.1.6-doc
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>.
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>.
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>.
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>/nix/store/7jq1vjy58nj8rjwa688l5x7dyzr55d9f-monad-memo-0.5.3... <span class="o">(</span><span class="m">34</span> KB left<span class="o">)</span>
+</code></pre></div>
+<p>This creates an environment with all dependencies listed in the “buildInputs” section, with GHC 8.10.4 and Cabal among these.</p>
+<p>Once you have recent versions of GHC and Cabal, make sure to use GHC 8.10.2 or later:</p>
+<div class="highlight"><span class="filename">#verify-ghc-version</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ghc --version
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>cabal --version
+</code></pre></div>
+<h3 id="running-the-cardano-node">Running the cardano-node<a class="headerlink" href="#running-the-cardano-node" title="Permanent link">&para;</a></h3>
+<p>Inside the nix-shell start a passive Cardano node, remember to first activate the Nix environment if you have not done so:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nix-shell plutus-tutorial.nix
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>**<span class="o">[</span>nix-shell:~<span class="o">]</span>**
+</code></pre></div>
+<div class="highlight"><span class="filename">#start-passive-cardano-node</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cardano-node-mainnet
+</code></pre></div>
+<p>At this point, the node will start syncing with the network, which will come useful for submitting our transactions later. We are now ready to start building the Plutus transaction. Keep the node running in this shell, and open a new terminal to continue with the following steps. Remember to enter the nix-shell environment in this new terminal so you have both GHC and Cabal available.</p>
+<h3 id="ensure-that-you-have-the-latest-tagged-version-era">Ensure that you have the latest tagged version era<a class="headerlink" href="#ensure-that-you-have-the-latest-tagged-version-era" title="Permanent link">&para;</a></h3>
+<p>In a <em>new</em> terminal, i.e. the cardano node should still be running in the old terminal.</p>
+<div class="highlight"><span class="filename">#ensure-you-are-in-alonzo</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cardano-cli query tip <span class="si">${</span><span class="nv">NETWORK_ID</span><span class="si">}</span>
+</code></pre></div>
+<p>You should now see the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nt">&quot;epoch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">155</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nt">&quot;hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c8ae0bb7f06743cd95c35e19c866a811b7a3f104ad362c8667b9f0a1f0907ed2&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nt">&quot;slot&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">36882965</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="nt">&quot;block&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2899736</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">&quot;era&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alonzo&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="nt">&quot;syncProgress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100.00&quot;</span><span class="w"></span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p><strong>Note:</strong> Ensure that “era” corresponds to “Alonzo”. If you have just started the node, you might need to wait for your node to sync before you can see this. The node is not actually needed to build a transaction, but it is useful to submit the transaction to the network.</p>
+<h4 id="generating-wallets">Generating Wallets<a class="headerlink" href="#generating-wallets" title="Permanent link">&para;</a></h4>
+<p>We must first create a payment key-pair and a wallet address if you haven't already. For this example, we need to generate two addresses as follows. For this step, generate a payment key in the corresponding address:</p>
+<div class="highlight"><span class="filename">#generate-wallets</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>cardano-cli address key-gen <span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>--verification-key-file ./temp/<span class="nv">$OWNER</span>.vkey <span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>--signing-key-file ./temp/<span class="nv">$OWNER</span>.skey
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>cardano-cli stake-address key-gen <span class="se">\</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>--verification-key-file ./temp/<span class="nv">$OWNER</span>.stake.vkey <span class="se">\</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>--signing-key-file ./temp/<span class="nv">$OWNER</span>.stake.skey
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>cardano-cli address build <span class="se">\</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>--payment-verification-key-file ./temp/<span class="nv">$OWNER</span>.vkey <span class="se">\</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>--stake-verification-key-file ./temp/<span class="nv">$OWNER</span>.stake.vkey <span class="se">\</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>--out-file ./temp/<span class="nv">$OWNER</span>.addr <span class="se">\</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">#generate-wallets</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>
+</code></pre></div>
+<p>Make sure to generate an additional wallet using the same steps above, so you can test transactions between these addresses.</p>
+<h4 id="build-and-submit-a-simple-non-plutus-transaction">Build and submit a simple (non-Plutus) transaction<a class="headerlink" href="#build-and-submit-a-simple-non-plutus-transaction" title="Permanent link">&para;</a></h4>
+<p>In this simple transaction, we send funds from one personal address to another address. Assume that we have these addresses in <code>payment.addr</code> and <code>payment2.addr</code> files and we want to send 500 ADA from the first address to the second address.</p>
+<p>First, we need to query the UTXOs in the <code>payment.addr</code>:</p>
+<div class="highlight"><span class="filename">#verify-payment-address-has-funds</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>cardano-cli query utxo --address <span class="si">${</span><span class="nv">ALICE_ADDR</span><span class="si">}</span> <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>TxHash                                                             TxIx  Amount
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>--------------------------------------------------------------------------------------
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>8c6f74370d823130847efe3d2e2e128f0e79c8e907fda692353d841dd0d6cb38   <span class="m">0</span>     <span class="m">1000000000</span> lovelace + TxOutDatumHashNone
+</code></pre></div>
+<div class="highlight"><span class="filename">#read-utxo-to-variable</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">readonly</span> <span class="nv">UTXO_TXIX</span><span class="o">=</span><span class="k">$(</span>cardano-cli query utxo <span class="nv">$NETWORK_ID</span> --address <span class="nv">$ALICE_ADDR</span> <span class="p">|</span> select_utxo_with_most_value<span class="k">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">echo</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="nb">echo</span> <span class="s2">&quot;UTxO:</span><span class="nv">$UTXO_TXIX</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Using this information, we can build a transaction:</p>
+<div class="highlight"><span class="filename">#build-transaction</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>cardano-cli transaction build <span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>--alonzo-era <span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>--change-address <span class="si">${</span><span class="nv">ALICE_ADDR</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>--tx-in <span class="si">${</span><span class="nv">UTXO_TXIX</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>--tx-out <span class="k">$(</span>cat ./temp/bob.addr<span class="k">)</span>+5000000 <span class="se">\</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>--out-file ./temp/tx.build
+</code></pre></div>
+<p>In the <code>--tx-in</code> argument we set the UTXO that we are using as input, the format of which is TxHash#TxIx.
+The <code>--tx-out</code> argument determines the output of the new UTXOs, the format of which is address+amount.</p>
+<p>As seen in the flow-diagram above, we can have one or more inputs and outputs.</p>
+<p>What follows is to sign and submit the transaction:</p>
+<div class="highlight"><span class="filename">#sign-simple-transaction</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>cardano-cli transaction sign <span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>--tx-body-file ./temp/tx.build <span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>--signing-key-file ./temp/alice.skey <span class="se">\</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>--out-file ./temp/tx.signed
+</code></pre></div>
+<div class="highlight"><span class="filename">#submit-simple-transaction</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>cardano-cli transaction submit --tx-file ./temp/tx.signed <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Transaction successfully submitted.
+</code></pre></div>
+<p>Now if we query payment2.addr we will have a new UTxO containing 500 ADAs:</p>
+<div class="highlight"><span class="filename">#query-2nd-address</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>cardano-cli query utxo --address <span class="k">$(</span>cat ./temp/bob.addr<span class="k">)</span> <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>TxHash                                                           TxIx   Amount
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>--------------------------------------------------------------------------------------
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>d7d207438c90fe611c1a14be29974b1662f8563331bf6fba4b6569e089ffa561 <span class="m">1</span>      <span class="m">500000000</span> lovelace + TxOutDatumHashNone
+</code></pre></div>
+<div class="highlight"><span class="filename">#query-1st-address</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>cardano-cli query utxo --address <span class="si">${</span><span class="nv">ALICE_ADDR</span><span class="si">}</span> <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>TxHash                                                           TxIx   Amount
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>--------------------------------------------------------------------------------------
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>d7d207438c90fe611c1a14be29974b1662f8563331bf6fba4b6569e089ffa561 <span class="m">0</span>      <span class="m">499831815</span> lovelace + TxOutDatumHashNone
+</code></pre></div>
+<p>We have now sent a simple transaction.</p>
+<h3 id="write-your-plutus-on-chain-code">Write your Plutus on chain code<a class="headerlink" href="#write-your-plutus-on-chain-code" title="Permanent link">&para;</a></h3>
+<p>We need a Haskell program to compile our desired Plutus script. In this example we will use the <a href="https://github.com/input-output-hk/Alonzo-testnet/tree/main/resources/plutus-sources/plutus-alwayssucceeds">plutus-alwayssucceeds</a> Plutus script.</p>
+<p><strong>Note</strong> The “Plutus always succeeds” script is used in this tutorial <em>only as an example</em>, as it uses a very simple protection mechanism that does not perform any validation of funds. Therefore, we recommend that you do not deploy this contract on the mainnet. If you still want to deploy it on mainnet, you should use a more secure datum.</p>
+<div class="highlight"><span class="filename">#clone-plutus-alwayssucceeds</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>git clone https://github.com/input-output-hk/Alonzo-testnet.git
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="nb">cd</span> Alonzo-testnet/resources/plutus-sources/plutus-alwayssucceeds
+</code></pre></div>
+<p>Note that, even though the program is part of the testnet examples, it will work for us on mainnet just fine.</p>
+<h3 id="serialize-your-plutus-on-chain-code">Serialize your Plutus on chain code<a class="headerlink" href="#serialize-your-plutus-on-chain-code" title="Permanent link">&para;</a></h3>
+<p>By building the project, we generate a binary that compiles this script.</p>
+<div class="highlight"><span class="filename">#serialize-on-chain-code</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>cabal update
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>cabal build
+</code></pre></div>
+<h4 id="execute-the-plutus-alwayssucceeds-project">Execute the plutus-alwayssucceeds project<a class="headerlink" href="#execute-the-plutus-alwayssucceeds-project" title="Permanent link">&para;</a></h4>
+<p>We will pick a random number. It will be passed as an argument to the Plutus script (it is not used by the script right now, but will be required by transactions using the script). The second argument is the filename we want for the compiled Plutus script.</p>
+<div class="highlight"><span class="filename">#execute-alwayssucceeds</span><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>cabal run plutus-alwayssucceeds -- <span class="m">42</span> alwayssucceeds.plutus
+</code></pre></div>
+<p>You should see something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Up to date
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Writing output to: alwayssucceeds.plutus
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="s2">&quot;Log output&quot;</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="o">[]</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="s2">&quot;Ex Budget&quot;</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>ExBudget <span class="o">{</span><span class="nv">exBudgetCPU</span> <span class="o">=</span> ExCPU <span class="m">297830</span>, <span class="nv">exBudgetMemory</span> <span class="o">=</span> ExMemory <span class="m">1100</span><span class="o">}</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">#print-serialized-alwayssucceeds</span><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>cat alwayssucceeds.plutus
+</code></pre></div>
+<p>You should see something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">{</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;PlutusScriptV1&quot;</span><span class="p">,</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>    <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>    <span class="s2">&quot;cborHex&quot;</span><span class="o">:</span> <span class="s2">&quot;4e4d01000033222220051200120011&quot;</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>We will then have the Plutus script compiled. Now, we need to build the transaction, using the <a href="https://github.com/input-output-hk/cardano-node/blob/master/doc/reference/cardano-node-cli-reference.md/">cardano-cli</a> project including the Plutus script.</p>
+<h4 id="transaction-to-lock-funds">Transaction to lock funds<a class="headerlink" href="#transaction-to-lock-funds" title="Permanent link">&para;</a></h4>
+<p>A transaction to lock funds is very similar to a simple transaction. However, it has two key differences: we lock funds to a script address instead of a common one, and we need to specify a datum hash for every output.</p>
+<p>We use the <strong>plutus-alwayssucceeds</strong> Plutus validator script that we compiled earlier. This script will not check anything and will always succeed regardless of the value of the datum and redeemer.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="cm">{-# INLINABLE mkValidator #-}</span><span class="w"></span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="nf">mkValidator</span><span class="w"> </span><span class="ow">::</span><span class="w"> </span><span class="kt">Data</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Data</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="kt">Data</span><span class="w"> </span><span class="ow">-&gt;</span><span class="w"> </span><span class="nb">()</span><span class="w"></span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="nf">mkValidator</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="kr">_</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="nb">()</span><span class="w"></span>
+</code></pre></div>
+<p>First, calculate the script address:</p>
+<div class="highlight"><span class="filename">#calculate-script-address</span><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>cardano-cli address build <span class="se">\</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>--payment-script-file ./temp/alwayssucceeds.plutus <span class="se">\</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>--out-file ./temp/script.addr
+</code></pre></div>
+<p>Now the script address is in the script.addr file:</p>
+<div class="highlight"><span class="filename">#calculate-script-address</span><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>cat ./temp/script.addr
+</code></pre></div>
+<p>We do not attach the datum to a UTXO directly but we use its hash. To get the hash of the datum, run the following cardano-cli command:</p>
+<div class="highlight"><span class="filename">#get-datum-hash</span><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nb">export</span> <span class="nv">SCRIPTDATUMHASH</span><span class="o">=</span><span class="k">$(</span>cardano-cli transaction hash-script-data --script-data-value <span class="m">42</span><span class="k">)</span>
+</code></pre></div>
+<p>Next, get the protocol parameters and save them to a file named <code>pparams.json</code> using:</p>
+<div class="highlight"><span class="filename">#get-protocol-parameters</span><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>cardano-cli query protocol-parameters <span class="se">\</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>--out-file ./temp/pparams.json
+</code></pre></div>
+<p>Now, we should build the transaction that will send ADA to the script address of our plutus-alwayssucceeds script. We write the transaction in a file called <code>tx-script.build</code>:</p>
+<div class="highlight"><span class="filename">#build-transaction-to-alwayssucceeds</span><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>cardano-cli transaction build <span class="se">\</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>--alonzo-era <span class="se">\</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>--change-address <span class="si">${</span><span class="nv">ALICE_ADDR</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>--tx-in <span class="s2">&quot;</span><span class="nv">$UTXO_TXIX</span><span class="s2">&quot;</span> <span class="se">\</span>
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>--tx-out <span class="k">$(</span>cat ./temp/script.addr<span class="k">)</span>+1379280 <span class="se">\</span>
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>--tx-out-datum-hash <span class="si">${</span><span class="nv">SCRIPTDATUMHASH</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>--protocol-params-file ./temp/pparams.json <span class="se">\</span>
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>--out-file ./temp/tx-script.build
+</code></pre></div>
+<p>Continue to sign the transaction with the signing key <code>payment.skey</code> and save this signed transaction in a file <code>tx-script.signed</code>:</p>
+<div class="highlight"><span class="filename">#sign-transaction-to-alwayssucceeds</span><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>cardano-cli transaction sign <span class="se">\</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>--tx-body-file ./temp/tx-script.build <span class="se">\</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>--signing-key-file ./temp/alice.skey <span class="se">\</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>--out-file ./temp/tx-script.signed
+</code></pre></div>
+<p>Finally, submit the transaction:</p>
+<div class="highlight"><span class="filename">#submit-transaction-to-alwayssucceeds</span><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>cardano-cli transaction submit <span class="nv">$NETWORK_ID</span> --tx-file ./temp/tx-script.signed
+</code></pre></div>
+<p>Transaction successfully submitted.</p>
+<p>We can query both personal and script addresses:</p>
+<div class="highlight"><span class="filename">#query-personal-and-script-addresses</span><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>cardano-cli query utxo --address <span class="si">${</span><span class="nv">ALICE_ADDR</span><span class="si">}</span> <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>TxHash                                                          TxIx  Amount
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>--------------------------------------------------------------------------------------
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>f5a618d579bc66e6199ae2a1ab4a73e2d8a73cba61a324c939346e9cf32bb33a <span class="m">0</span>    <span class="m">498284086</span> lovelace + TxOutDatumHashNone
+</code></pre></div>
+<div class="highlight"><span class="filename">#get-script-address-balance</span><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nb">export</span> <span class="nv">SCRIPT_ADDR</span><span class="o">=</span><span class="k">$(</span>cat ./temp/script.addr<span class="k">)</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>cardano-cli query utxo --address <span class="nv">$SCRIPT_ADDR</span> <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>TxHash                                                            TxIx  Amount
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>--------------------------------------------------------------------------------------
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>f5a618d579bc66e6199ae2a1ab4a73e2d8a73cba61a324c939346e9cf32bb33a     <span class="m">1</span>        <span class="m">1379280</span> lovelace + TxOutDatumHash ScriptDataInAlonzoEra <span class="s2">&quot;7c7c0bf83e0ed45faf3976a5ee19b4ef8bd069baab4275425161ac89d492bf82&quot;</span>
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>.
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>.
+</code></pre></div>
+<div class="highlight"><span class="filename">#plutusUtxoTxin</span><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1"># export PLUTUSUTXOTXIN=68a947f8ccb6845d3abf67376680509b476ea1cca187a486a93703bf59493f19#1</span>
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="nv">PLUTUSUTXOTXIN</span><span class="o">=</span><span class="k">$(</span>cardano-cli query utxo --address <span class="nv">$SCRIPT_ADDR</span> <span class="nv">$NETWORK_ID</span> <span class="p">|</span> grep <span class="s2">&quot;1379280&quot;</span><span class="p">|</span>tail -n1 <span class="p">|</span> cut --delimiter<span class="o">=</span><span class="s2">&quot; &quot;</span> --output-delimiter<span class="o">=</span><span class="s2">&quot;#&quot;</span> -f <span class="m">1</span>,6<span class="k">)</span>
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="nb">readonly</span> PLUTUSUTXOTXIN
+</code></pre></div>
+<p>Now, we have sent funds to a script.</p>
+<h3 id="4-submit-transaction-to-execute-plutus-script">4. Submit transaction to execute Plutus script<a class="headerlink" href="#4-submit-transaction-to-execute-plutus-script" title="Permanent link">&para;</a></h3>
+<p>To unlock funds from a script, we need the redeemer. Let’s remember that this script will always succeed regardless of the value of the redeemer, so long as we provide the correct datum. So we can use any value as a redeemer. We also need an input as collateral: it covers the fees if the transaction fails. Then, we need a UTXO with enough funds. We are going to create a simple transaction using the <code>payment2.addr</code> account as an example.</p>
+<p>It results in two new UTXOs.</p>
+<p>Check the balances:</p>
+<div class="highlight"><span class="filename">#get-balance-2nd-address</span><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nb">export</span> <span class="nv">BOB_ADDR</span><span class="o">=</span><span class="k">$(</span>cat ./temp/bob.addr<span class="k">)</span>
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>cardano-cli query utxo --address <span class="nv">$BOB_ADDR</span> <span class="nv">$NETWORK_ID</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>TxHash                                                           TxIx  Amount
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>--------------------------------------------------------------------------------------
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>d7d207438c90fe611c1a14be29974b1662f8563331bf6fba4b6569e089ffa561 <span class="m">1</span>     <span class="m">500000000</span> lovelace + TxOutDatumHashNone
+</code></pre></div>
+<div class="highlight"><span class="filename">#txCollateral</span><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="nb">export</span> <span class="nv">txCollateral</span><span class="o">=</span><span class="k">$(</span>cardano-cli query utxo <span class="nv">$NETWORK_ID</span> --address <span class="nv">$BOB_ADDR</span> <span class="p">|</span> select_utxo_with_most_value<span class="k">)</span>
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="nb">echo</span>
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="nb">echo</span> <span class="s2">&quot;txCollateral: </span><span class="nv">$txCollateral</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Construct, sign, and submit the new transaction to unlock the funds:</p>
+<div class="highlight"><span class="filename">#build-transaction-to-unlock-funds</span><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>cardano-cli transaction build <span class="se">\</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>            --alonzo-era <span class="se">\</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>            <span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>            --tx-in <span class="si">${</span><span class="nv">PLUTUSUTXOTXIN</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>            --tx-in-script-file ./temp/alwayssucceeds.plutus <span class="se">\</span>
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>            --tx-in-datum-value <span class="m">42</span> <span class="se">\</span>
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>            --tx-in-redeemer-value <span class="m">42</span> <span class="se">\</span>
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>            --tx-in-collateral <span class="si">${</span><span class="nv">txCollateral</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>            --change-address <span class="si">${</span><span class="nv">ALICE_ADDR</span><span class="si">}</span> <span class="se">\</span>
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>            --protocol-params-file ./temp/pparams.json <span class="se">\</span>
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>            --out-file ./temp/test-alonzo.tx
+</code></pre></div>
+<p>If we use a UTXO that is part of a script address as an input of the transaction, we need to specify the <code>--tx-in-script-file --tx-in datum-value --tx-in-redeemer-value --tx-in-collateral</code> arguments after the <code>--tx-in</code> argument containing that UTXO:</p>
+<div class="highlight"><span class="filename">#sign-transaction-to-unlock-funds</span><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>cardano-cli transaction sign <span class="se">\</span>
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>--tx-body-file ./temp/test-alonzo.tx <span class="se">\</span>
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>--signing-key-file ./temp/bob.skey <span class="se">\</span>
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="nv">$NETWORK_ID</span> <span class="se">\</span>
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>--out-file ./temp/test-alonzo.signed
+</code></pre></div>
+<div class="highlight"><span class="filename">#submit-transaction-to-unlock-funds</span><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>cardano-cli transaction submit <span class="nv">$NETWORK_ID</span> --tx-file ./temp/test-alonzo.signed
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>Transaction successfully submitted.
+</code></pre></div>
+<p>Now, if we query both addresses we can see that we have unlocked the funds:</p>
+<div class="highlight"><span class="filename">#query-both-addresses</span><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nb">echo</span> <span class="s2">&quot;Bob address has the funds liberated&quot;</span>
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>cardano-cli query utxo --address <span class="k">$(</span>cat ./temp/bob.addr<span class="k">)</span> <span class="nv">$NETWORK_ID</span>
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="nb">echo</span> <span class="s2">&quot;now the contract address has one uxto less&quot;</span>
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>cardano-cli query utxo --address <span class="k">$(</span>cat ./temp/script.addr<span class="k">)</span> <span class="nv">$NETWORK_ID</span> <span class="p">|</span> grep <span class="s2">&quot;1379280&quot;</span>
+</code></pre></div>
+<p>At this point, you have successfully submitted your first Plutus transaction!</p>
+<hr />
+<h2 id="automating-the-tutorial">Automating the tutorial<a class="headerlink" href="#automating-the-tutorial" title="Permanent link">&para;</a></h2>
+<p>This tutorial is composed of four sections:</p>
+<ul>
+<li>Installing Cardano Node with Nixos</li>
+<li>Creating wallets</li>
+<li>Submitting a simple non-plutus transaction</li>
+<li>Submitting a plutus transaction</li>
+</ul>
+<p>On the following scripts we are going to automate what we told the user to type</p>
+<h3 id="creating-wallets">Creating wallets<a class="headerlink" href="#creating-wallets" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">file://tutorials/plutus/scripts/10_create_wallets.sh</span><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="s">&lt;&lt;exe</span>cute-in-bash-strict-mode&gt;&gt;
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="c1">#### Build and submit a simple (non-Plutus) transaction</span>
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="c1">### Ensure that you have the latest tagged version era.</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>
+<a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a><span class="s">&lt;&lt;ensure-you-are-in-alonzo&gt;&gt;</span>
+<a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>
+<a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a>
+<a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a><span class="s">function create_wallets(){</span>
+<a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a><span class="s">    local OWNER=$1</span>
+<a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a>
+<a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a>
+<a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a><span class="s">&lt;&lt;gen</span>erate-wallets&gt;&gt;
+<a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a>
+<a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a><span class="o">}</span>
+<a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a>
+<a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a>create_wallets <span class="s1">&#39;alice&#39;</span>
+<a id="__codelineno-51-18" name="__codelineno-51-18" href="#__codelineno-51-18"></a>
+<a id="__codelineno-51-19" name="__codelineno-51-19" href="#__codelineno-51-19"></a><span class="c1"># echo &quot;Calling the faucet API to get some funds for our new wallets&quot;</span>
+<a id="__codelineno-51-20" name="__codelineno-51-20" href="#__codelineno-51-20"></a><span class="c1"># readonly APIKEY=$(cat ./secrets/api.key)</span>
+<a id="__codelineno-51-21" name="__codelineno-51-21" href="#__codelineno-51-21"></a><span class="c1"># curl --insecure -v -XPOST &quot;https://faucet.cardano-testnet.iohkdev.io/send-money/${ALICE_ADDR}?apiKey=${APIKEY}&quot;</span>
+<a id="__codelineno-51-22" name="__codelineno-51-22" href="#__codelineno-51-22"></a>
+<a id="__codelineno-51-23" name="__codelineno-51-23" href="#__codelineno-51-23"></a>
+<a id="__codelineno-51-24" name="__codelineno-51-24" href="#__codelineno-51-24"></a><span class="c1">### create a 2nd address</span>
+<a id="__codelineno-51-25" name="__codelineno-51-25" href="#__codelineno-51-25"></a>
+<a id="__codelineno-51-26" name="__codelineno-51-26" href="#__codelineno-51-26"></a>create_wallets <span class="s1">&#39;bob&#39;</span>
+<a id="__codelineno-51-27" name="__codelineno-51-27" href="#__codelineno-51-27"></a><span class="nb">echo</span> <span class="s2">&quot;Wallets generated&quot;</span>
+<a id="__codelineno-51-28" name="__codelineno-51-28" href="#__codelineno-51-28"></a>
+<a id="__codelineno-51-29" name="__codelineno-51-29" href="#__codelineno-51-29"></a><span class="c1">### Once we have proven that the instructions to generate an address still work.</span>
+<a id="__codelineno-51-30" name="__codelineno-51-30" href="#__codelineno-51-30"></a><span class="c1">#   We will copy the known good adressess</span>
+<a id="__codelineno-51-31" name="__codelineno-51-31" href="#__codelineno-51-31"></a>
+<a id="__codelineno-51-32" name="__codelineno-51-32" href="#__codelineno-51-32"></a>cp ./secrets/alice* ./temp/
+<a id="__codelineno-51-33" name="__codelineno-51-33" href="#__codelineno-51-33"></a>cp ./secrets/bob* ./temp/
+<a id="__codelineno-51-34" name="__codelineno-51-34" href="#__codelineno-51-34"></a>
+<a id="__codelineno-51-35" name="__codelineno-51-35" href="#__codelineno-51-35"></a>
+<a id="__codelineno-51-36" name="__codelineno-51-36" href="#__codelineno-51-36"></a><span class="s">&lt;&lt;read-payment-address-to-variable&gt;&gt;</span>
+<a id="__codelineno-51-37" name="__codelineno-51-37" href="#__codelineno-51-37"></a>
+<a id="__codelineno-51-38" name="__codelineno-51-38" href="#__codelineno-51-38"></a>
+<a id="__codelineno-51-39" name="__codelineno-51-39" href="#__codelineno-51-39"></a><span class="s">&lt;&lt;verify-payment-address-has-funds&gt;&gt;</span>
+<a id="__codelineno-51-40" name="__codelineno-51-40" href="#__codelineno-51-40"></a>
+<a id="__codelineno-51-41" name="__codelineno-51-41" href="#__codelineno-51-41"></a><span class="s">&lt;&lt;read</span>-utxo-to-variable&gt;&gt;
+<a id="__codelineno-51-42" name="__codelineno-51-42" href="#__codelineno-51-42"></a>
+<a id="__codelineno-51-43" name="__codelineno-51-43" href="#__codelineno-51-43"></a>assert_there_is_txhash <span class="nv">$UTXO_TXIX</span>
+<a id="__codelineno-51-44" name="__codelineno-51-44" href="#__codelineno-51-44"></a>
+<a id="__codelineno-51-45" name="__codelineno-51-45" href="#__codelineno-51-45"></a><span class="c1"># Now that we know that the instructions to create wallets work.</span>
+<a id="__codelineno-51-46" name="__codelineno-51-46" href="#__codelineno-51-46"></a><span class="c1"># let&#39;s substitute the files, with the ones we know have funds,</span>
+<a id="__codelineno-51-47" name="__codelineno-51-47" href="#__codelineno-51-47"></a><span class="c1"># so that the following tests also work.</span>
+</code></pre></div>
+<h3 id="submit-a-simple-non-plutus-transaction">Submit a simple non Plutus transaction<a class="headerlink" href="#submit-a-simple-non-plutus-transaction" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">file://tutorials/plutus/scripts/20_submit_simple_transaction.sh</span><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="s">&lt;&lt;exe</span>cute-in-bash-strict-mode&gt;&gt;
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="s">&lt;&lt;read-payment-address-to-variable&gt;&gt;</span>
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>
+<a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="s">&lt;&lt;read</span>-utxo-to-variable&gt;&gt;
+<a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>
+<a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="s">&lt;&lt;build-transaction&gt;&gt;</span>
+<a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>
+<a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="s">&lt;&lt;sign-simple-transaction&gt;&gt;</span>
+<a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a>
+<a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a><span class="s">&lt;&lt;sub</span>mit-simple-transaction&gt;&gt;
+<a id="__codelineno-52-12" name="__codelineno-52-12" href="#__codelineno-52-12"></a>
+<a id="__codelineno-52-13" name="__codelineno-52-13" href="#__codelineno-52-13"></a><span class="nb">echo</span> <span class="s2">&quot;Awaiting Transaction to be committed...&quot;</span>
+<a id="__codelineno-52-14" name="__codelineno-52-14" href="#__codelineno-52-14"></a>sleep <span class="m">60</span>
+<a id="__codelineno-52-15" name="__codelineno-52-15" href="#__codelineno-52-15"></a>
+<a id="__codelineno-52-16" name="__codelineno-52-16" href="#__codelineno-52-16"></a><span class="nb">echo</span> <span class="s2">&quot;and the 2nd payment adress has 50,000,000 *more* lovelaces&quot;</span>
+<a id="__codelineno-52-17" name="__codelineno-52-17" href="#__codelineno-52-17"></a><span class="s">&lt;&lt;query-2nd-address&gt;&gt;</span>
+<a id="__codelineno-52-18" name="__codelineno-52-18" href="#__codelineno-52-18"></a>
+<a id="__codelineno-52-19" name="__codelineno-52-19" href="#__codelineno-52-19"></a><span class="s">echo &quot;and the 1st payment adress has 50,000,000 *less* lovelaces&quot;</span>
+<a id="__codelineno-52-20" name="__codelineno-52-20" href="#__codelineno-52-20"></a><span class="s">&lt;&lt;query</span>-1st-address&gt;&gt;
+<a id="__codelineno-52-21" name="__codelineno-52-21" href="#__codelineno-52-21"></a>
+<a id="__codelineno-52-22" name="__codelineno-52-22" href="#__codelineno-52-22"></a><span class="nb">echo</span> <span class="s2">&quot;End: We were able to submit a simple transaction&quot;</span>
+</code></pre></div>
+<h3 id="submit-a-plutus-transaction">Submit a Plutus Transaction<a class="headerlink" href="#submit-a-plutus-transaction" title="Permanent link">&para;</a></h3>
+<div class="highlight"><span class="filename">file://tutorials/plutus/scripts/30_submit_plutus_transaction.sh</span><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="s">&lt;&lt;execute-in-bash-strict-mode&gt;&gt;</span>
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="s">&lt;&lt;ensure-you-are-in-alonzo&gt;&gt;</span>
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a>
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="s">&lt;&lt;calculate-script-address&gt;&gt;</span>
+<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a>
+<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="s">&lt;&lt;get-datum-hash&gt;&gt;</span>
+<a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a>
+<a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="s">&lt;&lt;get-protocol-parameters&gt;&gt;</span>
+<a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a>
+<a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="s">&lt;&lt;read-payment-address-to-variable&gt;&gt;</span>
+<a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a>
+<a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="s">&lt;&lt;read-utxo-to-variable&gt;&gt;</span>
+<a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a>
+<a id="__codelineno-53-15" name="__codelineno-53-15" href="#__codelineno-53-15"></a><span class="s">&lt;&lt;build-transaction-to-alwayssucceeds&gt;&gt;</span>
+<a id="__codelineno-53-16" name="__codelineno-53-16" href="#__codelineno-53-16"></a>
+<a id="__codelineno-53-17" name="__codelineno-53-17" href="#__codelineno-53-17"></a><span class="s">&lt;&lt;sign-transaction-to-alwayssucceeds&gt;&gt;</span>
+<a id="__codelineno-53-18" name="__codelineno-53-18" href="#__codelineno-53-18"></a>
+<a id="__codelineno-53-19" name="__codelineno-53-19" href="#__codelineno-53-19"></a><span class="s">&lt;&lt;submit-transaction-to-alwayssucceeds&gt;&gt;</span>
+<a id="__codelineno-53-20" name="__codelineno-53-20" href="#__codelineno-53-20"></a>
+<a id="__codelineno-53-21" name="__codelineno-53-21" href="#__codelineno-53-21"></a><span class="s">&lt;&lt;query-personal-and-script-addresses&gt;&gt;</span>
+<a id="__codelineno-53-22" name="__codelineno-53-22" href="#__codelineno-53-22"></a>
+<a id="__codelineno-53-23" name="__codelineno-53-23" href="#__codelineno-53-23"></a><span class="s">&lt;&lt;get-script-address-balance&gt;&gt;</span>
+<a id="__codelineno-53-24" name="__codelineno-53-24" href="#__codelineno-53-24"></a>
+<a id="__codelineno-53-25" name="__codelineno-53-25" href="#__codelineno-53-25"></a><span class="s">&lt;&lt;ensure-you-are-in-alonzo&gt;&gt;</span>
+<a id="__codelineno-53-26" name="__codelineno-53-26" href="#__codelineno-53-26"></a>
+<a id="__codelineno-53-27" name="__codelineno-53-27" href="#__codelineno-53-27"></a><span class="s">&lt;&lt;get-script-address-balance&gt;&gt;</span>
+<a id="__codelineno-53-28" name="__codelineno-53-28" href="#__codelineno-53-28"></a>
+<a id="__codelineno-53-29" name="__codelineno-53-29" href="#__codelineno-53-29"></a><span class="s">#copying busybox from the test script directory to bin</span>
+<a id="__codelineno-53-30" name="__codelineno-53-30" href="#__codelineno-53-30"></a><span class="s">cp ./busybox /bin/</span>
+<a id="__codelineno-53-31" name="__codelineno-53-31" href="#__codelineno-53-31"></a><span class="s">ln -s -T /bin/busybox /bin/grep</span>
+<a id="__codelineno-53-32" name="__codelineno-53-32" href="#__codelineno-53-32"></a>
+<a id="__codelineno-53-33" name="__codelineno-53-33" href="#__codelineno-53-33"></a>
+<a id="__codelineno-53-34" name="__codelineno-53-34" href="#__codelineno-53-34"></a><span class="s">&lt;&lt;plutusUtxoTxin&gt;&gt;</span>
+<a id="__codelineno-53-35" name="__codelineno-53-35" href="#__codelineno-53-35"></a>
+<a id="__codelineno-53-36" name="__codelineno-53-36" href="#__codelineno-53-36"></a>
+<a id="__codelineno-53-37" name="__codelineno-53-37" href="#__codelineno-53-37"></a><span class="s">### 4. Submit transaction to execute</span> Plutus script
+<a id="__codelineno-53-38" name="__codelineno-53-38" href="#__codelineno-53-38"></a>
+<a id="__codelineno-53-39" name="__codelineno-53-39" href="#__codelineno-53-39"></a><span class="s">&lt;&lt;get-balance-2nd-address&gt;&gt;</span>
+<a id="__codelineno-53-40" name="__codelineno-53-40" href="#__codelineno-53-40"></a>
+<a id="__codelineno-53-41" name="__codelineno-53-41" href="#__codelineno-53-41"></a><span class="s">&lt;&lt;txCollateral&gt;&gt;</span>
+<a id="__codelineno-53-42" name="__codelineno-53-42" href="#__codelineno-53-42"></a>
+<a id="__codelineno-53-43" name="__codelineno-53-43" href="#__codelineno-53-43"></a><span class="s">&lt;&lt;build-transaction-to-unlock-funds&gt;&gt;</span>
+<a id="__codelineno-53-44" name="__codelineno-53-44" href="#__codelineno-53-44"></a>
+<a id="__codelineno-53-45" name="__codelineno-53-45" href="#__codelineno-53-45"></a><span class="s">&lt;&lt;sig</span>n-transaction-to-unlock-funds&gt;&gt;
+<a id="__codelineno-53-46" name="__codelineno-53-46" href="#__codelineno-53-46"></a>
+<a id="__codelineno-53-47" name="__codelineno-53-47" href="#__codelineno-53-47"></a><span class="s">&lt;&lt;submit-trans</span>action-to-unlock-funds&gt;&gt;
+<a id="__codelineno-53-48" name="__codelineno-53-48" href="#__codelineno-53-48"></a>
+<a id="__codelineno-53-49" name="__codelineno-53-49" href="#__codelineno-53-49"></a>&lt;&lt;query-both-addresses&gt;&gt;
+</code></pre></div>
+<hr />
+<p>Now what we want is to create script / program that we can automatically execute with the steps we told the user to follow.
+A script that looks like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="s">&lt;&lt;exe</span>cute-in-bash-strict-mode&gt;&gt;
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="s">&lt;&lt;install-nix&gt;&gt;</span>
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>
+<a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="s">&lt;&lt;setup-binary-cache&gt;&gt;</span>
+<a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a>
+<a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a>
+<a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a>
+<a id="__codelineno-54-9" name="__codelineno-54-9" href="#__codelineno-54-9"></a><span class="s">&lt;&lt;install</span>-cardano-node&gt;&gt;
+<a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a>
+<a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a>cp ../tutorials/plutus/plutus-tutorial.nix .
+</code></pre></div>
+<h3 id="bash-strict-mode">Bash strict mode<a class="headerlink" href="#bash-strict-mode" title="Permanent link">&para;</a></h3>
+<p>This causes bash to behave in a way that makes many classes of subtle bugs impossible.
+You'll spend much less time debugging, and also avoid having unexpected complications in production.
+For more info: http://redsymbol.net/articles/unofficial-bash-strict-mode/</p>
+<div class="highlight"><span class="filename">#execute-in-bash-strict-mode</span><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="c1">#The shebang must be the first line of the file, but then it get&#39;s mixed with entangled comments</span>
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="c1"># this script must be executed with `bash $name_of_script`</span>
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="c1">#!/bin/bash</span>
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="nb">set</span> -xeEuo pipefail
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="c1">#IFS=$&#39;\n\t&#39;</span>
+<a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>
+<a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a><span class="k">function</span> select_utxo_with_most_value<span class="o">()</span>
+<a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a><span class="o">{</span>
+<a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a>    cut --delimiter<span class="o">=</span><span class="s1">&#39; &#39;</span> --fields<span class="o">=</span><span class="m">14</span>,1,6 --only-delimited &lt; /dev/stdin <span class="p">|</span> <span class="se">\</span>
+<a id="__codelineno-55-10" name="__codelineno-55-10" href="#__codelineno-55-10"></a>        sort --human-numeric-sort --key<span class="o">=</span><span class="m">3</span><span class="p">|</span>
+<a id="__codelineno-55-11" name="__codelineno-55-11" href="#__codelineno-55-11"></a>        cut --delimiter<span class="o">=</span><span class="s1">&#39; &#39;</span> --fields<span class="o">=</span><span class="m">1</span>,2 --output-delimiter<span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="p">|</span><span class="se">\</span>
+<a id="__codelineno-55-12" name="__codelineno-55-12" href="#__codelineno-55-12"></a>            tail --lines<span class="o">=</span><span class="m">1</span> &gt; /dev/stdout
+<a id="__codelineno-55-13" name="__codelineno-55-13" href="#__codelineno-55-13"></a><span class="o">}</span>
+<a id="__codelineno-55-14" name="__codelineno-55-14" href="#__codelineno-55-14"></a>
+<a id="__codelineno-55-15" name="__codelineno-55-15" href="#__codelineno-55-15"></a>assert_not_empty<span class="o">(){</span>
+<a id="__codelineno-55-16" name="__codelineno-55-16" href="#__codelineno-55-16"></a>    <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$var</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&quot;Parameter 1 is empty&quot;</span> <span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span><span class="p">;</span> <span class="o">}</span>
+<a id="__codelineno-55-17" name="__codelineno-55-17" href="#__codelineno-55-17"></a><span class="o">}</span>
+<a id="__codelineno-55-18" name="__codelineno-55-18" href="#__codelineno-55-18"></a>
+<a id="__codelineno-55-19" name="__codelineno-55-19" href="#__codelineno-55-19"></a>assert_there_is_txhash<span class="o">(){</span>
+<a id="__codelineno-55-20" name="__codelineno-55-20" href="#__codelineno-55-20"></a>    <span class="nb">local</span> <span class="nv">var</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<a id="__codelineno-55-21" name="__codelineno-55-21" href="#__codelineno-55-21"></a>    <span class="o">[</span> <span class="si">${#</span><span class="nv">var</span><span class="si">}</span> <span class="o">==</span> <span class="m">66</span> <span class="o">]</span> <span class="o">||</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&quot;TxHash can&#39;t be empty&quot;</span> <span class="p">;</span> <span class="nb">exit</span> <span class="m">1</span><span class="p">;</span> <span class="o">}</span>
+<a id="__codelineno-55-22" name="__codelineno-55-22" href="#__codelineno-55-22"></a><span class="o">}</span>
+<a id="__codelineno-55-23" name="__codelineno-55-23" href="#__codelineno-55-23"></a>
+<a id="__codelineno-55-24" name="__codelineno-55-24" href="#__codelineno-55-24"></a><span class="nb">readonly</span> <span class="nv">CARDANO_NODE_SOCKET_PATH</span><span class="o">=</span>/ipc/node.socket
+<a id="__codelineno-55-25" name="__codelineno-55-25" href="#__codelineno-55-25"></a><span class="nb">readonly</span> <span class="nv">NETWORK_ID</span><span class="o">=</span><span class="s2">&quot;--testnet-magic 1097911063&quot;</span> <span class="c1"># or &quot;--mainnet&quot;</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">#read-payment-address-to-variable</span><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="nb">readonly</span> <span class="nv">ALICE_ADDR</span><span class="o">=</span><span class="k">$(</span>cat ./temp/alice.addr<span class="k">)</span>
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="nb">echo</span>
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="nb">echo</span> <span class="s2">&quot;Payment address is: </span><span class="nv">$ALICE_ADDR</span><span class="s2">&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="inside-nix-shell">Inside nix-shell<a class="headerlink" href="#inside-nix-shell" title="Permanent link">&para;</a></h2>
+<p>Now what we want is to create script / program that we can automatically execute
+with the steps we told the user to follow.
+A script that looks like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="s">&lt;&lt;exe</span>cute-in-bash-strict-mode&gt;&gt;
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="s">&lt;&lt;verify-ghc-ver</span>sion&gt;&gt;
+<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>
+<a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="s">&lt;&lt;start-pas</span>sive-cardano-node&gt;&gt;
+<a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>
+<a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="nb">cd</span> cardano-node
+</code></pre></div>
+<hr />
+<h2 id="ultra">Ultra<a class="headerlink" href="#ultra" title="Permanent link">&para;</a></h2>
+<p>How to execute this tests?</p>
+<p>In order to run this tutorial we need 3 containers:</p>
+<ul>
+<li>Cardano-node :: that is connected  to the blockchain and downloading the blocks</li>
+<li>Cardano-cli :: that sends transactions to the Cardano-node</li>
+<li>Plutus compiler:: So that you can compile the plutus script used later.</li>
+</ul>
+<p>And also Cardano-node and the cardano-cli must be together.</p>
+<p>So in order to do that I use docker compose architecture</p>
+<div class="highlight"><span class="filename">file://tutorials/plutus/docker-compose.yml</span><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3&#39;</span><span class="w"></span>
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="nt">services</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="w">  </span><span class="nt">cardano-node</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputoutput/cardano-node</span><span class="w"></span>
+<a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a><span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./cardano-testnet-1097911063/_data:/data</span><span class="w"></span>
+<a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a><span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">node-ipc:/ipc</span><span class="w"></span>
+<a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NETWORK=testnet</span><span class="w"></span>
+<a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a>
+<a id="__codelineno-58-12" name="__codelineno-58-12" href="#__codelineno-58-12"></a><span class="w">  </span><span class="nt">node</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-13" name="__codelineno-58-13" href="#__codelineno-58-13"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputoutput/cardano-node</span><span class="w"></span>
+<a id="__codelineno-58-14" name="__codelineno-58-14" href="#__codelineno-58-14"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-15" name="__codelineno-58-15" href="#__codelineno-58-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">node-ipc:/ipc:ro</span><span class="w"></span>
+<a id="__codelineno-58-16" name="__codelineno-58-16" href="#__codelineno-58-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./:/plutus/</span><span class="w"></span>
+<a id="__codelineno-58-17" name="__codelineno-58-17" href="#__codelineno-58-17"></a><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-58-18" name="__codelineno-58-18" href="#__codelineno-58-18"></a><span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<a id="__codelineno-58-19" name="__codelineno-58-19" href="#__codelineno-58-19"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-20" name="__codelineno-58-20" href="#__codelineno-58-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CARDANO_NODE_SOCKET_PATH=/ipc/node.socket</span><span class="w"></span>
+<a id="__codelineno-58-21" name="__codelineno-58-21" href="#__codelineno-58-21"></a><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cli</span><span class="w"></span>
+<a id="__codelineno-58-22" name="__codelineno-58-22" href="#__codelineno-58-22"></a><span class="w">    </span><span class="nt">profiles</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-23" name="__codelineno-58-23" href="#__codelineno-58-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cardano</span><span class="w"></span>
+<a id="__codelineno-58-24" name="__codelineno-58-24" href="#__codelineno-58-24"></a><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-25" name="__codelineno-58-25" href="#__codelineno-58-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cardano-node</span><span class="w"></span>
+<a id="__codelineno-58-26" name="__codelineno-58-26" href="#__codelineno-58-26"></a>
+<a id="__codelineno-58-27" name="__codelineno-58-27" href="#__codelineno-58-27"></a><span class="w">  </span><span class="nt">plutus</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-28" name="__codelineno-58-28" href="#__codelineno-58-28"></a><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inputoutput/plutus-starter-devcontainer</span><span class="w"></span>
+<a id="__codelineno-58-29" name="__codelineno-58-29" href="#__codelineno-58-29"></a>
+<a id="__codelineno-58-30" name="__codelineno-58-30" href="#__codelineno-58-30"></a><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-31" name="__codelineno-58-31" href="#__codelineno-58-31"></a><span class="w">  </span><span class="nt">node-ipc</span><span class="p">:</span><span class="w"></span>
+<a id="__codelineno-58-32" name="__codelineno-58-32" href="#__codelineno-58-32"></a><span class="w">    </span><span class="nt">external</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+</code></pre></div>
+<p>Then you can execute start the architecture simply as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>docker-compose up --detach --remove-orphans
+</code></pre></div>
+<p>And then you can join the cardano-cli node like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>docker-compose run node cli query tip --testnet-magic <span class="m">1097911063</span>
+</code></pre></div>
+<p>Now to execute the tests:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>docker-compose run --entrypoint<span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span> node ./scripts/10_creating_wallets.sh<span class="s2">&quot;</span>
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a><span class="s2">docker-compose run --entrypoint=&quot;</span>/bin/bash<span class="s2">&quot; node ./scripts/20_submit_simple_transaction.sh&quot;</span>
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>docker-compose run --entrypoint<span class="o">=</span><span class="s2">&quot;/bin/bash&quot;</span> node ./scripts/30_submit_plutus_transaction.sh<span class="s2">&quot;</span>
+</code></pre></div>
+<p>we override the default entry point here so that it waits for a script file.</p>
+<p>In order to turn off the servers run this document</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>docker-compose down
+</code></pre></div>
+<hr />
+<h2 id="hyper-how-to-run-this-infraestructure-in-github-actions">Hyper: How to run this infraestructure in GitHub actions<a class="headerlink" href="#hyper-how-to-run-this-infraestructure-in-github-actions" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="todo-everything-again-but-with-nix">TODO : everything again but with Nix<a class="headerlink" href="#todo-everything-again-but-with-nix" title="Permanent link">&para;</a></h2>
+<p>tutorial
+meta: things to make the tutorial work
+ultra: things to setup the docker instances where the the tutorial would work (docker-compose)
+hyper: make the tutorial execute in CI</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      TODO your organization's name
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.22074ed6.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.960e086b.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
