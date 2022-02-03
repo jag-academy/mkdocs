@@ -8,13 +8,14 @@ on:
       - master
 jobs:
   deploy:
-    name: Test git-crypt-unlock
-    runs-on: ubuntu-latest
+    name: git-crypt-unlock
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@master
       - name: Install & unlock git-crypt
         run: |
-          which git-crypt || sudo apt install -y git-crypt
+          which git-crypt || apt update && apt-get install -y git-crypt
+          git status
           echo "${{ secrets.GIT_CRYPT_KEY }}" | base64  --decode > ./production.env.key
           git-crypt unlock ./production.env.key
           rm ./production.env.key

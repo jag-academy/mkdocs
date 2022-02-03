@@ -16,13 +16,14 @@ services:
     volumes:
       - node-ipc:/ipc:ro
       - ./:/plutus/
+    working_dir: /plutus/
     tty: true
     stdin_open: true
     environment:
       - CARDANO_NODE_SOCKET_PATH=/ipc/node.socket
     command: cli
     profiles:
-      - cardano
+      - node
     depends_on:
       - cardano-node
 
