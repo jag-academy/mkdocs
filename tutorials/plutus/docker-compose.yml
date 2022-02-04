@@ -15,7 +15,7 @@ services:
     image: inputoutput/cardano-node
     volumes:
       - node-ipc:/ipc:ro
-      - ./:/plutus/
+      - "${{ github.workspace }}/tutorials/plutus/":/plutus/
     working_dir: /plutus/
     tty: true
     stdin_open: true
@@ -33,4 +33,10 @@ services:
 volumes:
   node-ipc:
     external: true
+  etc-unbound:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: $(pwd)
 # ~\~ end
