@@ -15,7 +15,7 @@ services:
     image: inputoutput/cardano-node
     volumes:
       - node-ipc:/ipc:ro
-      - /github/workspace/tutorials/plutus/:/plutus/
+      - prometheus-data:/plutus/
     working_dir: /plutus/
     tty: true
     stdin_open: true
@@ -33,4 +33,10 @@ services:
 volumes:
   node-ipc:
     external: true
+  prometheus-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /github/workspace/
 # ~\~ end
