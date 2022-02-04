@@ -28,6 +28,7 @@ jobs:
       - name: trying to run all the tests
         run: |
           cd ./tutorials/plutus/
+          echo "host is in: $(pwd)"
           sudo apt-get remove docker-compose
           sudo apt  install -y jq bc
           DOCKER_COMPOSE_VERSION=$(curl --silent https://api.github.com/repos/docker/compose/releases/latest | jq .name -r)
@@ -36,6 +37,8 @@ jobs:
           docker-compose --version
           docker volume create --name=node-ipc
           docker-compose up --detach
+          docker-compose run --entrypoint="/bin/bash" node -c echo "docker in docker: $(pwd)"
+          docker-compose run --entrypoint="/bin/bash" node -c cd ./scripts/
           docker-compose run --entrypoint="/bin/bash" node -c pwd
           docker-compose run --entrypoint="/bin/bash" node -c ls -lrt
           bash ./run_all_scripts.sh
