@@ -36,11 +36,7 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
           docker volume create --name=node-ipc
-
-          docker-compose run --entrypoint="/bin/bash" node -c echo "docker in docker: $(pwd)"
-          docker-compose run --entrypoint="/bin/bash" node -c cd ./scripts/
-          docker-compose run --entrypoint="/bin/bash" node -c pwd
-          docker-compose run --entrypoint="/bin/bash" node -c ls -lrt
-
+          docker-compose up --detach
+          bash ./run_all_scripts.sh
       - name: stop the docker-compose server
         run: cd ./tutorials/plutus/ && docker-compose down
