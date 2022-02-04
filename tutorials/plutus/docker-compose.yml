@@ -6,8 +6,8 @@ services:
   cardano-node:
     image: inputoutput/cardano-node
     volumes:
-     - ./cardano-testnet-1097911063/_data:/data
-     - node-ipc:/ipc
+      - ./cardano-testnet-1097911063/_data:/data
+      - node-ipc:/ipc
     environment:
       - NETWORK=testnet
 
@@ -15,7 +15,7 @@ services:
     image: inputoutput/cardano-node
     volumes:
       - node-ipc:/ipc:ro
-      - "${{ github.workspace }}/tutorials/plutus/":/plutus/
+      - /github/workspace/tutorials/plutus/:/plutus/
     working_dir: /plutus/
     tty: true
     stdin_open: true
@@ -33,10 +33,4 @@ services:
 volumes:
   node-ipc:
     external: true
-  etc-unbound:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: $(pwd)
 # ~\~ end
