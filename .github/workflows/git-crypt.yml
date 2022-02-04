@@ -9,12 +9,12 @@ on:
 jobs:
   deploy:
     name: git-crypt-unlock
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@master
       - name: Install & unlock git-crypt
         run: |
-          which git-crypt || apt update && apt-get install -y git-crypt
+          which git-crypt || sudo apt-get update --allow-releaseinfo-change && apt-get install -y git-crypt
           git config --global user.email "agarciafdz@gmail.com"
           git config --global user.name "agarciafdz"
           git status
